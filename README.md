@@ -31,7 +31,7 @@ Kanbanizeは以下の特徴を持つカンバン型リマインダーアプリ�
 
 アプリの基本的な使い方は以下の動画でご確認いただけます：
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/KWUrTYyqyHI?si=SqWhxQELfxhkeQyz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=KWUrTYyqyHI
 
 ## バグ報告
 
