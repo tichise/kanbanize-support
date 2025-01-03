@@ -11,7 +11,7 @@ Kanbanizeは以下の特徴を持つカンバン型リマインダーアプリ�
 - ドラッグ＆ドロップで直感的なタスク状態の管理
 
 ### スクリーンショット
-<img src="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c" width="370" alt="カンバンボード画面">
+<img src="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c" width="700" alt="カンバンボード画面">
 
 ## TestFlight 外部テスト版
 
