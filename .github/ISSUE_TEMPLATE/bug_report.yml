@@ -1,0 +1,58 @@
+name: バグ報告
+description: アプリのバグを報告する
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        バグ報告ありがとうございます。できるだけ詳しい情報を記入してください。
+  
+  - type: textarea
+    id: description
+    attributes:
+      label: バグの説明
+      description: どのような問題が発生しているか詳しく教えてください
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 再現手順
+      description: このバグを再現するための手順を教えてください
+      value: |
+        1. 
+        2. 
+        3. 
+    validations:
+      required: true
+
+  - type: input
+    id: ios-version
+    attributes:
+      label: iOS バージョン
+      placeholder: "例: iOS 17.4"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: デバイス
+      placeholder: "例: iPhone 15 Pro"
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: アプリバージョン
+      placeholder: "例: 1.2.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: ログやスクリーンショット
+      description: 関連するログやスクリーンショットがあれば添付してください 

@@ -1,0 +1,33 @@
+name: 質問
+description: アプリに関する質問をする
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: 質問内容
+      description: できるだけ具体的に質問内容を記載してください
+    validations:
+      required: true
+
+  - type: input
+    id: ios-version
+    attributes:
+      label: iOS バージョン
+      placeholder: "例: iOS 17.4"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: デバイス
+      placeholder: "例: iPhone 15 Pro"
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: アプリバージョン
+      placeholder: "例: 1.2.0" 

@@ -1,0 +1,25 @@
+name: 機能リクエスト
+description: 新機能のアイデアを提案する
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 関連する問題
+      description: この機能リクエストは何か問題に関連していますか？
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 希望する解決策
+      description: どのような機能があれば良いか具体的に教えてください
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 検討した代替案
+      description: 他に検討した解決策があれば教えてください 
