@@ -4,11 +4,11 @@
 
 ## バグ報告
 
-バグ報告は[こちら](https://github.com/tichise/kanbanize-support/issues)からお願いします。
+バグ報告は[こちら]([https://github.com/tichise/kanbanize-support/issues](https://github.com/tichise/kanbanize-support/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml))からお願いします。
 
 ## 質問と機能リクエスト
 
-質問や機能リクエストは[こちら](https://github.com/tichise/kanbanize-support/issues)からお願いします。
+質問や機能リクエストは[こちら](https://github.com/tichise/kanbanize-support/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml)からお願いします。
 
 詳細は[こちら](https://github.com/tichise/kanbanize-support)をご覧ください。
 
