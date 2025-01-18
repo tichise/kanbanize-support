@@ -386,6 +386,111 @@
                 transform: rotate(1deg);
             }
         }
+
+        .footer {
+            background: #000;
+            color: white;
+            padding: 80px 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.05) 75%),
+                        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.05) 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            opacity: 0.1;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-section {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+            color: white;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, white, transparent);
+        }
+
+        .footer-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-links i {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .nav a i {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
@@ -487,6 +592,53 @@
             </div>
         </section>
     </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>サポート</h3>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/tichise/kanbanize-support" target="_blank">
+                        <i class="fas fa-life-ring"></i>サポートページ
+                    </a></li>
+                    <li><a href="https://github.com/tichise/kanbanize-support/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml" target="_blank">
+                        <i class="fas fa-bug"></i>バグ報告
+                    </a></li>
+                    <li><a href="https://github.com/tichise/kanbanize-support/issues/new?assignees=&labels=enhancement&projects=&template=feature_request.yml" target="_blank">
+                        <i class="fas fa-lightbulb"></i>機能リクエスト
+                    </a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>法的情報</h3>
+                <ul class="footer-links">
+                    <li><a href="TERMS_OF_SERVICE.html">
+                        <i class="fas fa-file-contract"></i>利用規約
+                    </a></li>
+                    <li><a href="PRIVACY_POLICY.html">
+                        <i class="fas fa-shield-alt"></i>プライバシーポリシー
+                    </a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>リンク</h3>
+                <ul class="footer-links">
+                    <li><a href="#features">
+                        <i class="fas fa-star"></i>機能紹介
+                    </a></li>
+                    <li><a href="#vision">
+                        <i class="fas fa-rocket"></i>Product Vision
+                    </a></li>
+                    <li><a href="http://testflight.apple.com/join/9guu3qtn">
+                        <i class="fas fa-download"></i>TestFlightでダウンロード
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 Kanbanize. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
         // Intersection Observer for animations
