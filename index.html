@@ -934,10 +934,9 @@
         // 付箋アニメーション
         function startStickyNotesAnimation(containerId) {
             const container = document.getElementById(containerId);
-            const maxParticles = 20; // 最大パーティクル数を削減
-            const interval = 800; // 生成間隔を増加
+            const maxParticles = 25; // 最大パーティクル数を25に制限
+            const interval = 800; // 生成間隔
             
-            // requestAnimationFrameを使用してアニメーションを最適化
             let lastTime = 0;
             let particles = [];
             
@@ -945,7 +944,7 @@
                 if (!lastTime) lastTime = currentTime;
                 const deltaTime = currentTime - lastTime;
                 
-                if (deltaTime > interval && particles.length < maxParticles) {
+                if (deltaTime > interval && container.children.length < maxParticles) {
                     createStickyNote(container);
                     lastTime = currentTime;
                 }
