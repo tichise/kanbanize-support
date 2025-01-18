@@ -3,60 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanbanize Support</title>
+    <title>Kanbanize - カンバン型リマインダーアプリ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            max-width: 800px;
+            color: var(--text-color);
+            background: var(--bg-color);
+        }
+
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
-            color: #333;
+            padding: 0 20px;
         }
-        .header {
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 80px 0;
             text-align: center;
-            padding: 40px 0;
-            background: #f5f5f5;
-            border-radius: 8px;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s;
+        }
+
+        .hero p {
+            font-size: 1.2em;
             margin-bottom: 30px;
+            animation: fadeIn 1s 0.5s both;
         }
-        h1 {
-            color: #2c3e50;
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s 1s both;
         }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .features {
+            padding: 60px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            animation: fadeIn 1s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .screenshot {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .screenshot img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 1s;
+        }
+
         .nav {
-            margin: 20px 0;
+            background: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+
         .nav a {
-            color: #3498db;
+            color: var(--secondary-color);
             text-decoration: none;
             margin-right: 20px;
+            transition: color 0.3s;
         }
+
         .nav a:hover {
-            text-decoration: underline;
+            color: var(--primary-color);
         }
-        .content {
-            padding: 20px;
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0;
+            }
+            .hero h1 {
+                font-size: 2em;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Kanbanize Support</h1>
-        <p>Kanbanizeに関するサポート情報</p>
-    </div>
+    <nav class="nav">
+        <div class="container">
+            <a href="#features">機能</a>
+            <a href="#demo">デモ</a>
+            <a href="TERMS_OF_SERVICE.html">利用規約</a>
+            <a href="PRIVACY_POLICY.html">プライバシーポリシー</a>
+        </div>
+    </nav>
 
-    <div class="nav">
-        <a href="TERMS_OF_SERVICE.html">利用規約</a>
-        <a href="PRIVACY_POLICY.html">プライバシーポリシー</a>
-    </div>
+    <section class="hero">
+        <div class="container">
+            <h1>Kanbanize</h1>
+            <p>iOS・iPadOS・macOS標準のリマインダーと自動同期する<br>カンバン型リマインダーアプリ</p>
+            <a href="http://testflight.apple.com/join/9guu3qtn" class="cta-button">TestFlightでダウンロード</a>
+        </div>
+    </section>
 
-    <div class="content">
-        <h2>Kanbanizeについて</h2>
-        <p>Kanbanizeは、効率的なプロジェクト管理とチームコラボレーションを実現するためのツールです。</p>
-        
-        <h2>サポート</h2>
-        <p>問題が発生した場合や機能リクエストがある場合は、GitHubのIssueを通じてご連絡ください。</p>
+    <div class="container">
+        <section class="features" id="features">
+            <div class="feature-card">
+                <h3>自動同期</h3>
+                <p>iOS/iPadOS/macOS標準リマインダーとシームレスに同期（EventKit使用）</p>
+            </div>
+            <div class="feature-card">
+                <h3>直感的な操作</h3>
+                <p>ドラッグ＆ドロップでタスクの状態を簡単に変更</p>
+            </div>
+            <div class="feature-card">
+                <h3>進捗管理</h3>
+                <p>リマインダーを「TODO」「進行中」「完了」の3段階で管理</p>
+            </div>
+            <div class="feature-card">
+                <h3>タイトル候補機能</h3>
+                <p>タスク作成時のタイトル入力欄に、既存タスクのタイトルを候補として表示</p>
+            </div>
+            <div class="feature-card">
+                <h3>優先度設定</h3>
+                <p>タスクに優先度を設定し、優先度順にソート可能</p>
+            </div>
+            <div class="feature-card">
+                <h3>完了タスクの一括削除</h3>
+                <p>完了済みタスクをワンタップで一括削除</p>
+            </div>
+        </section>
+
+        <section class="screenshot">
+            <img src="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c" alt="カンバンボード画面" width="700">
+        </section>
+
+        <section id="demo" class="video-section">
+            <h2>デモ動画</h2>
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; margin: 30px 0;">
+                <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+                    src="https://www.youtube.com/embed/KWUrTYyqyHI" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
     </div>
 </body>
 </html> 
