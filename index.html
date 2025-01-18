@@ -513,134 +513,91 @@
             margin-right: 8px;
         }
 
-        #features {
+        #features, #future {
+            background: black;
             position: relative;
             overflow: hidden;
-            background: transparent;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding: 100px 0;
         }
 
-        #features::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
+        #features .container, #future .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
         }
 
-        #features .section-title {
+        #features .section-title, #future .section-title {
             color: white;
             position: relative;
             z-index: 2;
         }
 
-        #features .feature-card {
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 12px;
             position: relative;
-            z-index: 2;
+            transform: rotate(-1deg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 4px 6px rgba(0, 0, 0, 0.1),
+                0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
-        .features-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 1;
-            filter: brightness(0.2);
+        .feature-card:nth-child(2n) {
+            transform: rotate(1deg);
+            background: rgba(255, 255, 255, 0.07);
         }
 
-        .sticky-notes-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: #000;
-            overflow: hidden;
+        .feature-card:nth-child(3n) {
+            transform: rotate(-0.5deg);
+            background: rgba(255, 255, 255, 0.06);
         }
 
-        .sticky-note {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: #fff;
-            transform-origin: center;
-            animation: floatNote 15s linear infinite;
-            opacity: 0.1;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .feature-card:hover {
+            transform: translateY(-10px) rotate(0deg) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.2),
+                0 10px 10px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .sticky-note:hover {
-            opacity: 0.3;
-            transform: scale(1.2) rotate(10deg);
-        }
-
-        .sticky-note::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            border-width: 0 20px 20px 0;
-            border-style: solid;
-            border-color: rgba(0,0,0,0.1) transparent;
-        }
-
-        @keyframes floatNote {
-            0% {
-                transform: translateY(100vh) translateX(-100px) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.1;
-            }
-            90% {
-                opacity: 0.1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        .hero::before {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        #features {
-            background: transparent;
-        }
-
-        #features::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-        }
-
-        #future .section-title {
+        .feature-card h3 {
             color: white;
+            font-size: 1.5em;
+            margin-bottom: 20px;
             position: relative;
-            z-index: 2;
+            font-weight: 700;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        #future::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 1;
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .feature-card i {
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: block;
+            color: white;
+            opacity: 0.8;
+            background: linear-gradient(45deg, rgba(255,255,255,1), rgba(255,255,255,0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        #features::before, #future::before {
+            display: none;
         }
     </style>
 </head>
