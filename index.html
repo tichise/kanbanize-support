@@ -108,6 +108,17 @@
             margin-top: 60px;
         }
 
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            filter: brightness(0.4);
+        }
+
         .hero::before {
             content: '';
             position: absolute;
@@ -115,10 +126,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(45deg, #000, #333);
+            background: rgba(0, 0, 0, 0.7);
             z-index: -1;
-            animation: gradientBG 15s ease infinite;
-            background-size: 400% 400%;
         }
 
         .hero-content {
@@ -494,6 +503,119 @@
         .nav a i {
             margin-right: 8px;
         }
+
+        #features {
+            position: relative;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        #features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        #features .section-title {
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        #features .feature-card {
+            position: relative;
+            z-index: 2;
+        }
+
+        .features-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.2);
+        }
+
+        .sticky-notes-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .sticky-note {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            transform-origin: center;
+            animation: floatNote 15s linear infinite;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .sticky-note:hover {
+            opacity: 0.3;
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .sticky-note::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 20px 20px 0;
+            border-style: solid;
+            border-color: rgba(0,0,0,0.1) transparent;
+        }
+
+        @keyframes floatNote {
+            0% {
+                transform: translateY(100vh) translateX(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.1;
+            }
+            90% {
+                opacity: 0.1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hero::before {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        #features {
+            background: transparent;
+        }
+
+        #features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
@@ -506,6 +628,10 @@
     </nav>
 
     <section class="hero">
+        <div class="sticky-notes-bg" id="heroNotes"></div>
+        <video class="hero-video" autoplay loop muted playsinline>
+            <source src="https://www.youtube.com/watch?v=KWUrTYyqyHI" type="video/mp4">
+        </video>
         <div class="hero-content">
             <h1>Kanbanize</h1>
             <p>iOS・iPadOS・macOS標準のリマインダーと自動同期する<br>カンバン型リマインダーアプリ</p>
@@ -525,6 +651,10 @@
 
     <div class="container">
         <section id="features" class="section">
+            <div class="sticky-notes-bg" id="featuresNotes"></div>
+            <video class="features-video" autoplay loop muted playsinline>
+                <source src="https://www.youtube.com/watch?v=KWUrTYyqyHI" type="video/mp4">
+            </video>
             <h2 class="section-title"><i class="fas fa-star"></i> 主な特徴</h2>
             <div class="features">
                 <div class="feature-card">
@@ -657,6 +787,53 @@
         sections.forEach(section => observer.observe(section));
         observer.observe(aboutContent);
         observer.observe(aboutImage);
+
+        // 付箋アニメーション
+        function createStickyNote(container) {
+            const note = document.createElement('div');
+            note.className = 'sticky-note';
+            
+            // ランダムな色を設定
+            const colors = ['#FFB3BA', '#BAFFC9', '#BAE1FF', '#FFFFBA', '#FFB3FF'];
+            note.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            // ランダムな開始位置
+            note.style.left = `${Math.random() * 100}%`;
+            
+            // ランダムな回転角度
+            note.style.transform = `rotate(${Math.random() * 360}deg)`;
+            
+            // ランダムなアニメーション時間
+            note.style.animationDuration = `${10 + Math.random() * 10}s`;
+            
+            container.appendChild(note);
+            
+            // アニメーション終了時に要素を削除
+            note.addEventListener('animationend', () => {
+                note.remove();
+            });
+
+            // クリックイベント
+            note.addEventListener('click', () => {
+                note.style.transform = `scale(1.5) rotate(${Math.random() * 360}deg)`;
+                note.style.opacity = '0.4';
+                setTimeout(() => {
+                    note.style.opacity = '0';
+                    setTimeout(() => note.remove(), 300);
+                }, 500);
+            });
+        }
+
+        function startStickyNotesAnimation(containerId) {
+            const container = document.getElementById(containerId);
+            setInterval(() => {
+                createStickyNote(container);
+            }, 500);
+        }
+
+        // アニメーションを開始
+        startStickyNotesAnimation('heroNotes');
+        startStickyNotesAnimation('featuresNotes');
     </script>
 </body>
 </html> 
