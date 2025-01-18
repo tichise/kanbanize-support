@@ -238,39 +238,87 @@
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 60px;
             margin-top: 60px;
+            padding: 20px;
         }
 
         .feature-card {
-            background: white;
+            background: linear-gradient(to bottom right, #fffaf0, #fff5e6);
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
-            transition: all 0.5s ease;
-            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 2px;
+            position: relative;
+            transform: rotate(-2deg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 1px 1px rgba(0,0,0,0.12),
+                0 2px 2px rgba(0,0,0,0.12),
+                0 4px 4px rgba(0,0,0,0.12),
+                0 8px 8px rgba(0,0,0,0.12);
+        }
+
+        .feature-card:nth-child(2n) {
+            transform: rotate(1deg);
+            background: linear-gradient(to bottom right, #f0f8ff, #e6f2ff);
+        }
+
+        .feature-card:nth-child(3n) {
+            transform: rotate(-1deg);
+            background: linear-gradient(to bottom right, #fff0f5, #ffe6ee);
         }
 
         .feature-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(-10px) rotate(0deg);
+            box-shadow: 
+                0 2px 2px rgba(0,0,0,0.15),
+                0 4px 4px rgba(0,0,0,0.15),
+                0 8px 8px rgba(0,0,0,0.15),
+                0 16px 16px rgba(0,0,0,0.15);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20px;
+            right: 20px;
+            height: 30px;
+            background: rgba(0,0,0,0.03);
+            filter: blur(5px);
+            border-radius: 50%;
+            z-index: -1;
         }
 
         .feature-card h3 {
             font-size: 1.5em;
             margin-bottom: 20px;
             position: relative;
+            color: #333;
+            font-weight: 700;
             padding-bottom: 15px;
+            border-bottom: 2px dashed rgba(0,0,0,0.1);
         }
 
-        .feature-card h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 30px;
-            height: 2px;
-            background: var(--text-color);
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .feature-card i {
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: block;
+            color: #333;
+            opacity: 0.7;
+        }
+
+        #future .feature-card {
+            background: linear-gradient(to bottom right, #f5f5f5, #e6e6e6);
+        }
+
+        #future .feature-card:nth-child(2n) {
+            background: linear-gradient(to bottom right, #f0f0f0, #e0e0e0);
         }
 
         .about-section {
@@ -327,6 +375,16 @@
                 text-align: center;
                 justify-content: center;
             }
+            .features {
+                gap: 40px;
+                padding: 10px;
+            }
+            .feature-card {
+                transform: rotate(-1deg);
+            }
+            .feature-card:nth-child(2n) {
+                transform: rotate(1deg);
+            }
         }
     </style>
 </head>
@@ -367,14 +425,17 @@
             <h2 class="section-title">主な特徴</h2>
             <div class="features">
                 <div class="feature-card">
+                    <i class="fas fa-columns"></i>
                     <h3>カンバン型レイアウト</h3>
                     <p>タスクを「To Do」「In Progress」「Done」などのカテゴリーで整理し、進捗をリアルタイムで更新。</p>
                 </div>
                 <div class="feature-card">
+                    <i class="fas fa-sync-alt"></i>
                     <h3>iOS標準リマインダーとの連携</h3>
                     <p>EventKitを活用し、iOSリマインダーの情報を簡単に取り込んで、タスク管理を一元化。</p>
                 </div>
                 <div class="feature-card">
+                    <i class="fas fa-arrows-alt"></i>
                     <h3>ドラッグ＆ドロップ機能</h3>
                     <p>タスクの進行状況をドラッグ＆ドロップで簡単に変更でき、効率的に管理。</p>
                 </div>
@@ -395,13 +456,15 @@
         </section>
 
         <section id="future" class="section">
-            <h2 class="section-title">機能追加予定</h2>
+            <h2 class="section-title">Product Vision</h2>
             <div class="features">
                 <div class="feature-card">
+                    <i class="fas fa-code-branch"></i>
                     <h3>ワークフローの統合</h3>
                     <p>GitHub ActionsとGitHub Projectsの連携のように、タスクを実行可能なワークフローと結びつける機能をリマインダーアプリでも再現します。</p>
                 </div>
                 <div class="feature-card">
+                    <i class="fas fa-robot"></i>
                     <h3>AIエージェントによる自動化</h3>
                     <p>タスクの自動振り分けや進捗更新など、AIエージェントを活用した作業自動化機能を開発中です。</p>
                 </div>
