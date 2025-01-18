@@ -691,6 +691,78 @@
             max-width: 400px;
             margin: 0 auto;
         }
+
+        #features {
+            background: black;
+            position: relative;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(50% - 50vw);
+            margin-right: calc(50% - 50vw);
+            padding: 100px 0;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 0, 128, 0.15),
+                rgba(64, 0, 255, 0.15) 33%,
+                rgba(0, 128, 255, 0.15) 66%,
+                rgba(255, 0, 128, 0.15) 100%
+            );
+            background-size: 300% 300%;
+            animation: gradientMove 15s ease infinite;
+            filter: blur(50px);
+            opacity: 0.5;
+        }
+
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                circle at 50% 50%,
+                rgba(128, 0, 255, 0.2),
+                transparent 70%
+            );
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(1.1);
+            }
+        }
+
+        #features .container {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
@@ -737,37 +809,40 @@
         </section>
 
         <section id="features" class="section">
-            <h2 class="section-title"><i class="fas fa-star"></i> 主な特徴</h2>
-            <div class="features">
-                <div class="feature-card">
-                    <i class="fas fa-sync-alt"></i>
-                    <h3>自動同期</h3>
-                    <p>iOS/iPadOS/macOS標準リマインダーとシームレスに同期。EventKitを使用して、あなたのタスクを常に最新の状態に保ちます。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-columns"></i>
-                    <h3>カンバン型レイアウト</h3>
-                    <p>タスクを「TODO」「進行中」「完了」の3段階で管理。直感的な操作で、効率的なタスク管理を実現します。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-arrows-alt"></i>
-                    <h3>ドラッグ＆ドロップ</h3>
-                    <p>タスクの進行状況をドラッグ＆ドロップで簡単に変更。スムーズな操作性で、ストレスフリーな管理を実現。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-lightbulb"></i>
-                    <h3>タイトル候補機能</h3>
-                    <p>タスク作成時のタイトル入力欄に、既存タスクのタイトルを候補として表示。設定画面でオン/オフの切り替えが可能です。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-sort-amount-up"></i>
-                    <h3>優先度設定</h3>
-                    <p>タスクに優先度を設定し、優先度順にソート可能。重要なタスクを見逃すことなく管理できます。</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-trash-alt"></i>
-                    <h3>完了タスクの一括削除</h3>
-                    <p>完了済みタスクをワンタップで一括削除。シンプルな操作で、タスクリストをクリーンに保てます。</p>
+            <div class="gradient-bg"></div>
+            <div class="container">
+                <h2 class="section-title"><i class="fas fa-star"></i> 主な特徴</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <i class="fas fa-sync-alt"></i>
+                        <h3>自動同期</h3>
+                        <p>iOS/iPadOS/macOS標準リマインダーとシームレスに同期。EventKitを使用して、あなたのタスクを常に最新の状態に保ちます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-columns"></i>
+                        <h3>カンバン型レイアウト</h3>
+                        <p>タスクを「TODO」「進行中」「完了」の3段階で管理。直感的な操作で、効率的なタスク管理を実現します。</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-arrows-alt"></i>
+                        <h3>ドラッグ＆ドロップ</h3>
+                        <p>タスクの進行状況をドラッグ＆ドロップで簡単に変更。スムーズな操作性で、ストレスフリーな管理を実現。</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>タイトル候補機能</h3>
+                        <p>タスク作成時のタイトル入力欄に、既存タスクのタイトルを候補として表示。設定画面でオン/オフの切り替えが可能です。</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-sort-amount-up"></i>
+                        <h3>優先度設定</h3>
+                        <p>タスクに優先度を設定し、優先度順にソート可能。重要なタスクを見逃すことなく管理できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-trash-alt"></i>
+                        <h3>完了タスクの一括削除</h3>
+                        <p>完了済みタスクをワンタップで一括削除。シンプルな操作で、タスクリストをクリーンに保てます。</p>
+                    </div>
                 </div>
             </div>
         </section>
