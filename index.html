@@ -676,12 +676,12 @@
         }
 
         @keyframes colorChange {
-            0% { background: rgba(255, 82, 82, 0.4); }
-            20% { background: rgba(255, 192, 82, 0.4); }
-            40% { background: rgba(82, 255, 82, 0.4); }
-            60% { background: rgba(82, 192, 255, 0.4); }
-            80% { background: rgba(192, 82, 255, 0.4); }
-            100% { background: rgba(255, 82, 82, 0.4); }
+            0% { background: rgba(0, 222, 255, 0.3); }
+            20% { background: rgba(255, 102, 153, 0.3); }
+            40% { background: rgba(255, 217, 51, 0.3); }
+            60% { background: rgba(153, 204, 255, 0.3); }
+            80% { background: rgba(128, 230, 128, 0.3); }
+            100% { background: rgba(0, 222, 255, 0.3); }
         }
 
         .sticky-note:hover {
@@ -1247,9 +1247,11 @@
             note.className = 'sticky-note';
             
             const colors = [
-                'rgba(255, 82, 82, 0.2)',
-                'rgba(82, 192, 255, 0.2)',
-                'rgba(192, 82, 255, 0.2)'
+                'rgba(0, 222, 255, 0.3)',   // 青
+                'rgba(255, 102, 153, 0.3)',  // ピンク
+                'rgba(255, 217, 51, 0.3)',   // 黄色
+                'rgba(153, 204, 255, 0.3)',  // 薄青
+                'rgba(128, 230, 128, 0.3)'   // 緑
             ];
             note.style.setProperty('--particle-color', colors[Math.floor(Math.random() * colors.length)]);
             
