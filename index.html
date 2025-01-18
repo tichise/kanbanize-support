@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kanbanize - カンバン型リマインダーアプリ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2c3e50;
-            --accent-color: #e74c3c;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
+            --primary-color: #000;
+            --secondary-color: #333;
+            --bg-color: #fff;
+            --text-color: #000;
+            --accent-color: #666;
         }
 
         * {
@@ -20,11 +23,35 @@
             box-sizing: border-box;
         }
 
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.8;
             color: var(--text-color);
             background: var(--bg-color);
+            overflow-x: hidden;
         }
 
         .container {
@@ -33,136 +60,221 @@
             padding: 0 20px;
         }
 
+        .nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-right: 30px;
+            font-weight: 500;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--text-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
         .hero {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 80px 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            position: relative;
+            overflow: hidden;
+            margin-top: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #000, #333);
+            z-index: -1;
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        .hero-content {
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
         .hero h1 {
-            font-size: 3em;
+            font-size: 4em;
             margin-bottom: 20px;
-            animation: fadeInDown 1s;
+            font-weight: 700;
+            letter-spacing: 2px;
+            animation: float 6s ease-in-out infinite;
         }
 
         .hero p {
-            font-size: 1.2em;
-            margin-bottom: 30px;
-            animation: fadeIn 1s 0.5s both;
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.5s;
         }
 
         .cta-button {
             display: inline-block;
-            padding: 15px 30px;
-            background: var(--accent-color);
-            color: white;
+            padding: 20px 40px;
+            background: white;
+            color: black;
             text-decoration: none;
-            border-radius: 25px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            animation: fadeInUp 1s 1s both;
+            border-radius: 50px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 1s;
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .section {
+            padding: 100px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--text-color);
         }
 
         .features {
-            padding: 60px 0;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            gap: 40px;
+            margin-top: 60px;
         }
 
         .feature-card {
             background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-            animation: fadeIn 1s;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .feature-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         .feature-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 15px;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
         }
 
-        .screenshot {
-            margin: 60px 0;
-            text-align: center;
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--text-color);
         }
 
-        .screenshot img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            animation: fadeIn 1s;
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
         }
 
-        .nav {
-            background: white;
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        .about-content {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 1s ease;
         }
 
-        .nav a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            margin-right: 20px;
-            transition: color 0.3s;
+        .about-content.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        .nav a:hover {
-            color: var(--primary-color);
+        .about-image {
+            position: relative;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .about-image img {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 768px) {
-            .hero {
-                padding: 60px 0;
-            }
             .hero h1 {
-                font-size: 2em;
+                font-size: 2.5em;
             }
-            .features {
+            .about-section {
                 grid-template-columns: 1fr;
+            }
+            .section {
+                padding: 60px 0;
             }
         }
     </style>
@@ -171,14 +283,15 @@
     <nav class="nav">
         <div class="container">
             <a href="#features">機能</a>
-            <a href="#demo">デモ</a>
+            <a href="#about">アプリについて</a>
+            <a href="#future">今後の展望</a>
             <a href="TERMS_OF_SERVICE.html">利用規約</a>
             <a href="PRIVACY_POLICY.html">プライバシーポリシー</a>
         </div>
     </nav>
 
     <section class="hero">
-        <div class="container">
+        <div class="hero-content">
             <h1>Kanbanize</h1>
             <p>iOS・iPadOS・macOS標準のリマインダーと自動同期する<br>カンバン型リマインダーアプリ</p>
             <a href="http://testflight.apple.com/join/9guu3qtn" class="cta-button">TestFlightでダウンロード</a>
@@ -186,49 +299,71 @@
     </section>
 
     <div class="container">
-        <section class="features" id="features">
-            <div class="feature-card">
-                <h3>自動同期</h3>
-                <p>iOS/iPadOS/macOS標準リマインダーとシームレスに同期（EventKit使用）</p>
-            </div>
-            <div class="feature-card">
-                <h3>直感的な操作</h3>
-                <p>ドラッグ＆ドロップでタスクの状態を簡単に変更</p>
-            </div>
-            <div class="feature-card">
-                <h3>進捗管理</h3>
-                <p>リマインダーを「TODO」「進行中」「完了」の3段階で管理</p>
-            </div>
-            <div class="feature-card">
-                <h3>タイトル候補機能</h3>
-                <p>タスク作成時のタイトル入力欄に、既存タスクのタイトルを候補として表示</p>
-            </div>
-            <div class="feature-card">
-                <h3>優先度設定</h3>
-                <p>タスクに優先度を設定し、優先度順にソート可能</p>
-            </div>
-            <div class="feature-card">
-                <h3>完了タスクの一括削除</h3>
-                <p>完了済みタスクをワンタップで一括削除</p>
+        <section id="features" class="section">
+            <h2 class="section-title">主な特徴</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>カンバン型レイアウト</h3>
+                    <p>タスクを「To Do」「In Progress」「Done」などのカテゴリーで整理し、進捗をリアルタイムで更新。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>iOS標準リマインダーとの連携</h3>
+                    <p>EventKitを活用し、iOSリマインダーの情報を簡単に取り込んで、タスク管理を一元化。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>ドラッグ＆ドロップ機能</h3>
+                    <p>タスクの進行状況をドラッグ＆ドロップで簡単に変更でき、効率的に管理。</p>
+                </div>
             </div>
         </section>
 
-        <section class="screenshot">
-            <img src="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c" alt="カンバンボード画面" width="700">
+        <section id="about" class="section">
+            <h2 class="section-title">アプリ名の由来</h2>
+            <div class="about-section">
+                <div class="about-content">
+                    <p>「Kanbanize」という名前には、カンバン形式のUIを取り入れていることが由来しています。「Kanban」は、日本の製造業で使用されるタスクの可視化と進捗管理のシステムを指します。</p>
+                    <p>また、「付箋を使ったカンバン」の持つ自由度の高さをシステムに落とし込みたいという考えも、この名前に込められています。現在のUIは「まず最初の形」として設計されており、今後、より柔軟性と自由度の高いUIを提供することで、個々のワークスタイルやタスク管理のニーズに対応していく予定です。</p>
+                </div>
+                <div class="about-image">
+                    <img src="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c" alt="カンバンボード画面">
+                </div>
+            </div>
         </section>
 
-        <section id="demo" class="video-section">
-            <h2>デモ動画</h2>
-            <div style="position: relative; padding-bottom: 56.25%; height: 0; margin: 30px 0;">
-                <iframe 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                    src="https://www.youtube.com/embed/KWUrTYyqyHI" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+        <section id="future" class="section">
+            <h2 class="section-title">今後の展望</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>ワークフローの統合</h3>
+                    <p>GitHub ActionsとGitHub Projectsの連携のように、タスクを実行可能なワークフローと結びつける機能をリマインダーアプリでも再現します。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AIエージェントによる自動化</h3>
+                    <p>タスクの自動振り分けや進捗更新など、AIエージェントを活用した作業自動化機能を開発中です。</p>
+                </div>
             </div>
         </section>
     </div>
+
+    <script>
+        // Intersection Observer for animations
+        const sections = document.querySelectorAll('.section');
+        const aboutContent = document.querySelector('.about-content');
+        const aboutImage = document.querySelector('.about-image');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => observer.observe(section));
+        observer.observe(aboutContent);
+        observer.observe(aboutImage);
+    </script>
 </body>
 </html> 
