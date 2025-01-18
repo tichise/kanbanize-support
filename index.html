@@ -113,50 +113,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 1;
-        }
-
-        .hero-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
+            background: linear-gradient(45deg, #000, #333);
+            z-index: -1;
+            animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
         }
 
         .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .noise {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAGFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVfJ92AAAACHRSTlMABQgNERQYHSYx7y0AAACWSURBVDjLhZExDoQwDARzgF8E/P+xV6G5QjS7kSh8wLRrr2wJ3F6R6J3bmt2jkL0LVS0II0EOYQiRlCGQghACVYUQQgBFCKSQEEKQQgghhBBCCCEkqHAIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgghhBBCCCGEEEIIIYQQQgjxAx6NM5yBkV7gAAAAAElFTkSuQmCC');
-            opacity: 0.05;
-            animation: noise 0.5s steps(2) infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes noise {
-            0% { transform: translate(0,0) }
-            10% { transform: translate(-5%,-5%) }
-            20% { transform: translate(-10%,5%) }
-            30% { transform: translate(5%,-10%) }
-            40% { transform: translate(-5%,15%) }
-            50% { transform: translate(-10%,5%) }
-            60% { transform: translate(15%,0) }
-            70% { transform: translate(0,10%) }
-            80% { transform: translate(-15%,0) }
-            90% { transform: translate(10%,5%) }
-            100% { transform: translate(5%,0) }
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
         }
 
         .hero h1 {
@@ -227,108 +193,88 @@
         }
 
         .features {
-            display: flex;
-            flex-direction: column;
-            gap: 100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
         }
 
-        .feature-item {
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background: var(--text-color);
+        }
+
+        .about-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 60px;
             align-items: center;
+        }
+
+        .about-content {
             opacity: 0;
-            transform: translateY(50px);
+            transform: translateX(-50px);
             transition: all 1s ease;
         }
 
-        .feature-item.visible {
+        .about-content.visible {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
         }
 
-        .feature-item:nth-child(even) {
-            direction: rtl;
-        }
-
-        .feature-item:nth-child(even) .feature-content {
-            direction: ltr;
-        }
-
-        .feature-content {
-            padding: 40px;
-        }
-
-        .feature-content h3 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .feature-video {
+        .about-image {
             position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 1s ease;
         }
 
-        .feature-video video {
+        .about-image.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .about-image img {
             width: 100%;
-            display: block;
-            border-radius: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-item:hover .feature-video video {
-            transform: scale(1.05);
-        }
-
-        .roadmap {
-            padding: 150px 0;
-            background: #000;
-            color: #fff;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .roadmap::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, rgba(0,0,0,0.7), rgba(0,0,0,0.3));
-            z-index: 1;
-        }
-
-        .roadmap-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .roadmap h2 {
-            font-size: 3em;
-            margin-bottom: 30px;
-            background: linear-gradient(45deg, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
 
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5em;
             }
-            .feature-item {
+            .about-section {
                 grid-template-columns: 1fr;
-                gap: 30px;
             }
-            
-            .feature-item:nth-child(even) {
-                direction: ltr;
+            .section {
+                padding: 60px 0;
             }
         }
     </style>
@@ -345,10 +291,6 @@
     </nav>
 
     <section class="hero">
-        <video class="hero-video" autoplay muted loop playsinline>
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-typing-on-neon-keyboard-close-up-1428-large.mp4" type="video/mp4">
-        </video>
-        <div class="noise"></div>
         <div class="hero-content">
             <h1>Kanbanize</h1>
             <p>iOS・iPadOS・macOS標準のリマインダーと自動同期する<br>カンバン型リマインダーアプリ</p>
@@ -360,40 +302,17 @@
         <section id="features" class="section">
             <h2 class="section-title">主な特徴</h2>
             <div class="features">
-                <div class="feature-item">
-                    <div class="feature-content">
-                        <h3>カンバン型レイアウト</h3>
-                        <p>タスクを「To Do」「In Progress」「Done」などのカテゴリーで整理し、進捗をリアルタイムで更新。直感的な操作で、タスク管理をよりスムーズに。</p>
-                    </div>
-                    <div class="feature-video">
-                        <video autoplay muted loop playsinline>
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-hands-typing-on-neon-keyboard-1418-large.mp4" type="video/mp4">
-                        </video>
-                    </div>
+                <div class="feature-card">
+                    <h3>カンバン型レイアウト</h3>
+                    <p>タスクを「To Do」「In Progress」「Done」などのカテゴリーで整理し、進捗をリアルタイムで更新。</p>
                 </div>
-
-                <div class="feature-item">
-                    <div class="feature-content">
-                        <h3>iOS標準リマインダーとの連携</h3>
-                        <p>EventKitを活用し、iOSリマインダーの情報を簡単に取り込んで、タスク管理を一元化。シームレスな同期で、作業効率を最大化。</p>
-                    </div>
-                    <div class="feature-video">
-                        <video autoplay muted loop playsinline>
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-clicking-on-a-laptop-keyboard-1416-large.mp4" type="video/mp4">
-                        </video>
-                    </div>
+                <div class="feature-card">
+                    <h3>iOS標準リマインダーとの連携</h3>
+                    <p>EventKitを活用し、iOSリマインダーの情報を簡単に取り込んで、タスク管理を一元化。</p>
                 </div>
-
-                <div class="feature-item">
-                    <div class="feature-content">
-                        <h3>ドラッグ＆ドロップ機能</h3>
-                        <p>タスクの進行状況をドラッグ＆ドロップで簡単に変更でき、効率的に管理。スムーズな操作性で、ストレスフリーなタスク管理を実現。</p>
-                    </div>
-                    <div class="feature-video">
-                        <video autoplay muted loop playsinline>
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-typing-on-smartphone-screen-4485-large.mp4" type="video/mp4">
-                        </video>
-                    </div>
+                <div class="feature-card">
+                    <h3>ドラッグ＆ドロップ機能</h3>
+                    <p>タスクの進行状況をドラッグ＆ドロップで簡単に変更でき、効率的に管理。</p>
                 </div>
             </div>
         </section>
@@ -411,40 +330,27 @@
             </div>
         </section>
 
-        <section id="future" class="roadmap">
-            <div class="roadmap-content">
-                <h2>Product Vision</h2>
-                <div class="features">
-                    <div class="feature-item">
-                        <div class="feature-content">
-                            <h3>ワークフローの統合</h3>
-                            <p>GitHub ActionsとGitHub Projectsの連携のように、タスクを実行可能なワークフローと結びつける機能をリマインダーアプリでも再現します。</p>
-                        </div>
-                        <div class="feature-video">
-                            <video autoplay muted loop playsinline>
-                                <source src="https://assets.mixkit.co/videos/preview/mixkit-programming-screen-with-abstract-coding-1434-large.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
-                    <div class="feature-item">
-                        <div class="feature-content">
-                            <h3>AIエージェントによる自動化</h3>
-                            <p>タスクの自動振り分けや進捗更新など、AIエージェントを活用した作業自動化機能を開発中です。</p>
-                        </div>
-                        <div class="feature-video">
-                            <video autoplay muted loop playsinline>
-                                <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-city-2919-large.mp4" type="video/mp4">
-                            </video>
-                        </div>
-                    </div>
+        <section id="future" class="section">
+            <h2 class="section-title">今後の展望</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <h3>ワークフローの統合</h3>
+                    <p>GitHub ActionsとGitHub Projectsの連携のように、タスクを実行可能なワークフローと結びつける機能をリマインダーアプリでも再現します。</p>
+                </div>
+                <div class="feature-card">
+                    <h3>AIエージェントによる自動化</h3>
+                    <p>タスクの自動振り分けや進捗更新など、AIエージェントを活用した作業自動化機能を開発中です。</p>
                 </div>
             </div>
         </section>
     </div>
 
     <script>
-        const featureItems = document.querySelectorAll('.feature-item');
-        
+        // Intersection Observer for animations
+        const sections = document.querySelectorAll('.section');
+        const aboutContent = document.querySelector('.about-content');
+        const aboutImage = document.querySelector('.about-image');
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -455,7 +361,9 @@
             threshold: 0.1
         });
 
-        featureItems.forEach(item => observer.observe(item));
+        sections.forEach(section => observer.observe(section));
+        observer.observe(aboutContent);
+        observer.observe(aboutImage);
     </script>
 </body>
 </html> 
