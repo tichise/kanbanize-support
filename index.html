@@ -208,13 +208,13 @@
 
         .hero-video-container iframe {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: -1%;
+            left: -1%;
+            width: 102%;
+            height: 102%;
             border: none;
             display: block;
-            transform: scale(1.02);
+            transform: scale(0.98);
             transform-origin: center center;
         }
 
@@ -905,104 +905,99 @@
             }
         }
 
-        .future-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            transition: all 0.3s ease;
+        .footer-copyright {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.9em;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .future-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                rgba(255, 255, 255, 0.2),
-                rgba(255, 255, 255, 0.1),
-                transparent
+            background: linear-gradient(90deg, 
+                rgba(0, 222, 255, 0.1),
+                rgba(255, 102, 153, 0.1),
+                rgba(255, 217, 51, 0.1),
+                rgba(153, 204, 255, 0.1),
+                rgba(128, 230, 128, 0.1)
             );
-            animation: shine 3s infinite;
-            pointer-events: none;
         }
 
-        .future-card::after {
+        .footer-copyright p {
+            position: relative;
+            display: inline-block;
+            padding: 10px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .footer-copyright p::before {
             content: '';
             position: absolute;
             inset: 0;
+            border-radius: 20px;
+            padding: 2px;
             background: linear-gradient(
-                125deg,
-                rgba(0, 222, 255, 0.2),
-                rgba(255, 102, 153, 0.2),
-                rgba(255, 217, 51, 0.2),
-                rgba(153, 204, 255, 0.2),
-                rgba(128, 230, 128, 0.2)
+                45deg,
+                #00DEFF,
+                #FF6699,
+                #FFD933,
+                #99CCFF,
+                #80E680
             );
-            opacity: 0;
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0.5;
             transition: opacity 0.3s ease;
         }
 
-        .future-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.2),
-                0 0 30px rgba(0, 222, 255, 0.3),
-                0 0 50px rgba(255, 102, 153, 0.2);
+        .footer-copyright p:hover {
+            transform: translateY(-2px);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
         }
 
-        .future-card:hover::after {
+        .footer-copyright p:hover::before {
             opacity: 1;
+            animation: borderFlow 2s linear infinite;
         }
 
-        @keyframes shine {
+        @keyframes borderFlow {
             0% {
-                transform: translate(-50%, -50%) rotate(0deg);
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            50% {
+                filter: hue-rotate(180deg) brightness(1.2);
             }
             100% {
-                transform: translate(-50%, -50%) rotate(360deg);
+                filter: hue-rotate(360deg) brightness(1);
             }
         }
 
-        .future-card h3 {
-            color: white;
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            position: relative;
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .future-card p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.8;
-            font-size: 1.1em;
-            position: relative;
-            z-index: 1;
-        }
-
-        .future-card i {
-            font-size: 2em;
-            margin-bottom: 20px;
-            display: block;
-            background: linear-gradient(45deg, #00DEFF, #FF6699, #FFD933, #99CCFF, #80E680);
+        .footer-copyright span {
+            background: linear-gradient(
+                45deg,
+                #00DEFF,
+                #FF6699,
+                #FFD933,
+                #99CCFF,
+                #80E680
+            );
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: colorFlow 3s infinite;
+            background-clip: text;
+            color: transparent;
+            font-weight: 500;
+            animation: textFlow 3s ease infinite;
         }
 
-        @keyframes colorFlow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
+        @keyframes textFlow {
+            0%, 100% {
+                filter: hue-rotate(0deg) brightness(1);
+            }
+            50% {
+                filter: hue-rotate(180deg) brightness(1.2);
+            }
         }
     </style>
 </head>
@@ -1152,8 +1147,8 @@
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2025 Kanbanize. All rights reserved.</p>
+        <div class="footer-copyright">
+            <p>© <span>2025</span> Kanbanize. All rights reserved.</p>
         </div>
     </footer>
 
