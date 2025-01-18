@@ -934,18 +934,27 @@
         // 付箋アニメーション
         function startStickyNotesAnimation(containerId) {
             const container = document.getElementById(containerId);
-            const maxParticles = 25; // 最大パーティクル数を25に制限
-            const interval = 800; // 生成間隔
+            const maxParticles = 25;
+            const interval = 800;
+            
+            // 初期パーティクルを生成（画面中央から）
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            for (let i = 0; i < 10; i++) {
+                const note = createStickyNote(container, true, centerX, centerY);
+                const progress = Math.random() * 100;
+                note.style.animationDelay = `-${progress}%`;
+            }
             
             let lastTime = 0;
-            let particles = [];
             
             function animate(currentTime) {
                 if (!lastTime) lastTime = currentTime;
                 const deltaTime = currentTime - lastTime;
                 
                 if (deltaTime > interval && container.children.length < maxParticles) {
-                    createStickyNote(container);
+                    createStickyNote(container, false);
                     lastTime = currentTime;
                 }
                 
@@ -955,47 +964,50 @@
             requestAnimationFrame(animate);
         }
 
-        function createStickyNote(container) {
+        function createStickyNote(container, isInitial, centerX, centerY) {
             const note = document.createElement('div');
             note.className = 'sticky-note';
             
-            // 色のバリエーションを減らし、透明度を下げる
             const colors = [
-                'rgba(255, 82, 82, 0.2)',   // 赤
-                'rgba(82, 192, 255, 0.2)',  // 青
-                'rgba(192, 82, 255, 0.2)'   // 紫
+                'rgba(255, 82, 82, 0.2)',
+                'rgba(82, 192, 255, 0.2)',
+                'rgba(192, 82, 255, 0.2)'
             ];
             note.style.setProperty('--particle-color', colors[Math.floor(Math.random() * colors.length)]);
             
-            // アニメーションを簡略化
-            const startX = Math.random() * window.innerWidth;
-            const startY = window.innerHeight + 50; // 開始位置を近くに
+            let startX, startY;
+            if (isInitial) {
+                // 初期パーティクルは画面中央から
+                startX = centerX + (Math.random() - 0.5) * 200; // 中央から±100px
+                startY = centerY + (Math.random() - 0.5) * 200;
+            } else {
+                // 通常のパーティクルは下から
+                startX = Math.random() * window.innerWidth;
+                startY = window.innerHeight + 50;
+            }
+            
             const endX = Math.random() * window.innerWidth;
-            const endY = -50; // 終了位置を近くに
+            const endY = -50;
             
             note.style.setProperty('--startX', startX);
             note.style.setProperty('--startY', startY);
             note.style.setProperty('--endX', endX);
             note.style.setProperty('--endY', endY);
             
-            // クリップパスの計算を簡略化
             const clipValue = 45 + Math.random() * 10;
             note.style.setProperty('--clip1', `${clipValue}% 0`);
             note.style.setProperty('--clip2', `100% ${clipValue}%`);
             note.style.setProperty('--clip3', `${clipValue}% 100%`);
             note.style.setProperty('--clip4', `0 ${clipValue}%`);
             
-            // サイズを小さく統一
-            const size = 40 + Math.random() * 40; // サイズ範囲を縮小
+            const size = 40 + Math.random() * 40;
             note.style.width = `${size}px`;
             note.style.height = `${size}px`;
             
-            // アニメーション時間を短縮
             note.style.animationDuration = `${8 + Math.random() * 7}s`;
             
             container.appendChild(note);
             
-            // イベントリスナーを最小限に
             note.addEventListener('mousemove', (e) => {
                 const rect = note.getBoundingClientRect();
                 const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 20;
@@ -1014,6 +1026,8 @@
             note.addEventListener('animationend', () => {
                 note.remove();
             }, { passive: true });
+
+            return note;
         }
 
         // アニメーションを開始
