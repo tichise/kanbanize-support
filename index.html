@@ -165,14 +165,45 @@
         }
 
         .hero-video-container {
+            position: relative;
             width: 70%;
             max-width: 560px;
             margin: 30px auto;
-            position: relative;
-            padding-bottom: 39.375%; /* 56.25% * 0.7 */
+            padding-bottom: 39.375%;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1),
+                0 0 30px rgba(0, 222, 255, 0.2),
+                0 0 50px rgba(255, 102, 153, 0.1);
+            transform: perspective(1000px) rotateX(2deg);
+            transition: all 0.3s ease;
+        }
+
+        .hero-video-container:hover {
+            transform: perspective(1000px) rotateX(0deg);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 50px rgba(0, 222, 255, 0.3),
+                0 0 70px rgba(255, 102, 153, 0.2);
+        }
+
+        .hero-video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            z-index: 1;
         }
 
         .hero-video-container iframe {
@@ -182,6 +213,9 @@
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
+            transform: scale(1.02);
+            transform-origin: center center;
         }
 
         .news-section {
@@ -869,6 +903,106 @@
                 padding: 15px 30px;
                 font-size: 0.95em;
             }
+        }
+
+        .future-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .future-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0.1),
+                transparent
+            );
+            animation: shine 3s infinite;
+            pointer-events: none;
+        }
+
+        .future-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                125deg,
+                rgba(0, 222, 255, 0.2),
+                rgba(255, 102, 153, 0.2),
+                rgba(255, 217, 51, 0.2),
+                rgba(153, 204, 255, 0.2),
+                rgba(128, 230, 128, 0.2)
+            );
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .future-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.2),
+                0 0 30px rgba(0, 222, 255, 0.3),
+                0 0 50px rgba(255, 102, 153, 0.2);
+        }
+
+        .future-card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .future-card h3 {
+            color: white;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            position: relative;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .future-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.1em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .future-card i {
+            font-size: 2em;
+            margin-bottom: 20px;
+            display: block;
+            background: linear-gradient(45deg, #00DEFF, #FF6699, #FFD933, #99CCFF, #80E680);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: colorFlow 3s infinite;
+        }
+
+        @keyframes colorFlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
     </style>
 </head>
