@@ -864,90 +864,89 @@
         observer.observe(aboutImage);
 
         // 付箋アニメーション
+        function startStickyNotesAnimation(containerId) {
+            const container = document.getElementById(containerId);
+            const maxParticles = 20; // 最大パーティクル数を削減
+            const interval = 800; // 生成間隔を増加
+            
+            // requestAnimationFrameを使用してアニメーションを最適化
+            let lastTime = 0;
+            let particles = [];
+            
+            function animate(currentTime) {
+                if (!lastTime) lastTime = currentTime;
+                const deltaTime = currentTime - lastTime;
+                
+                if (deltaTime > interval && particles.length < maxParticles) {
+                    createStickyNote(container);
+                    lastTime = currentTime;
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
         function createStickyNote(container) {
             const note = document.createElement('div');
             note.className = 'sticky-note';
             
-            // ランダムな色を設定
+            // 色のバリエーションを減らし、透明度を下げる
             const colors = [
-                'rgba(255, 82, 82, 0.4)',   // 赤
-                'rgba(255, 192, 82, 0.4)',  // オレンジ
-                'rgba(82, 255, 82, 0.4)',   // 緑
-                'rgba(82, 192, 255, 0.4)',  // 青
-                'rgba(192, 82, 255, 0.4)'   // 紫
+                'rgba(255, 82, 82, 0.2)',   // 赤
+                'rgba(82, 192, 255, 0.2)',  // 青
+                'rgba(192, 82, 255, 0.2)'   // 紫
             ];
             note.style.setProperty('--particle-color', colors[Math.floor(Math.random() * colors.length)]);
             
-            // ランダムな開始位置と終了位置を計算
+            // アニメーションを簡略化
             const startX = Math.random() * window.innerWidth;
-            const startY = window.innerHeight + 100;
+            const startY = window.innerHeight + 50; // 開始位置を近くに
             const endX = Math.random() * window.innerWidth;
-            const endY = -100;
+            const endY = -50; // 終了位置を近くに
             
             note.style.setProperty('--startX', startX);
             note.style.setProperty('--startY', startY);
             note.style.setProperty('--endX', endX);
             note.style.setProperty('--endY', endY);
             
-            // ランダムなクリップパスの初期値を設定
-            const randomClip = () => 40 + Math.random() * 20;
-            note.style.setProperty('--clip1', `${randomClip()}% 0`);
-            note.style.setProperty('--clip2', `100% ${randomClip()}%`);
-            note.style.setProperty('--clip3', `${randomClip()}% 100%`);
-            note.style.setProperty('--clip4', `0 ${randomClip()}%`);
+            // クリップパスの計算を簡略化
+            const clipValue = 45 + Math.random() * 10;
+            note.style.setProperty('--clip1', `${clipValue}% 0`);
+            note.style.setProperty('--clip2', `100% ${clipValue}%`);
+            note.style.setProperty('--clip3', `${clipValue}% 100%`);
+            note.style.setProperty('--clip4', `0 ${clipValue}%`);
             
-            // サイズをランダムに
-            const size = 30 + Math.random() * 80;
+            // サイズを小さく統一
+            const size = 40 + Math.random() * 40; // サイズ範囲を縮小
             note.style.width = `${size}px`;
             note.style.height = `${size}px`;
             
-            // アニメーション時間をランダムに
-            note.style.animationDuration = `${10 + Math.random() * 15}s`;
+            // アニメーション時間を短縮
+            note.style.animationDuration = `${8 + Math.random() * 7}s`;
             
             container.appendChild(note);
             
-            // マウス移動に反応
+            // イベントリスナーを最小限に
             note.addEventListener('mousemove', (e) => {
                 const rect = note.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                
-                const angleX = (y - centerY) / centerY * 30;
-                const angleY = (x - centerX) / centerX * 30;
-                
-                note.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.5)`;
-                note.style.filter = `hue-rotate(${(x + y) % 360}deg)`;
-            });
+                const x = (e.clientX - rect.left - rect.width / 2) / rect.width * 20;
+                const y = (e.clientY - rect.top - rect.height / 2) / rect.height * 20;
+                note.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) scale(1.2)`;
+            }, { passive: true });
             
-            // マウスが離れたときの処理
             note.addEventListener('mouseleave', () => {
                 note.style.transform = '';
-                note.style.filter = '';
-            });
+            }, { passive: true });
             
-            // クリックイベント
             note.addEventListener('click', () => {
-                note.style.transform = 'scale(3) rotate(720deg)';
-                note.style.opacity = '0';
-                setTimeout(() => note.remove(), 600);
-            });
+                note.remove();
+            }, { passive: true });
             
-            // アニメーション終了時に要素を削除
             note.addEventListener('animationend', () => {
                 note.remove();
-            });
-        }
-
-        function startStickyNotesAnimation(containerId) {
-            const container = document.getElementById(containerId);
-            setInterval(() => {
-                if (container.children.length < 50) {
-                    createStickyNote(container);
-                }
-            }, 300);
+            }, { passive: true });
         }
 
         // アニメーションを開始
