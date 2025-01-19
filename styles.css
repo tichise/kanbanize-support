@@ -502,34 +502,47 @@ body {
 
 .about-image {
 	position: relative;
-	opacity: 0;
-	transform: translateX(50px);
-	transition: all 1s ease;
-	padding-bottom: 30px;  /* 影用の余白を追加 */
-	margin-bottom: -30px;  /* 余白分を相殺 */
+	width: 100%;
+	max-width: 600px;
+	margin: 2rem auto;
+	padding: 1.5rem;
+	border-radius: 24px;
+	background: #ffffff;
+	box-shadow: 
+		0 10px 30px rgba(0, 0, 0, 0.1),
+		0 1px 8px rgba(0, 0, 0, 0.05);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	overflow: hidden;
+}
+
+.about-image:hover {
+	transform: translateY(-5px);
+	box-shadow: 
+		0 20px 40px rgba(0, 0, 0, 0.12),
+		0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.about-image img {
+	width: 100%;
+	height: auto;
+	display: block;
+	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.about-image:hover img {
+	transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+	.about-image {
+		margin: 1rem auto;
+		padding: 0.5rem;
+	}
 }
 
 .about-image.visible {
 	opacity: 1;
 	transform: translateX(0);
-}
-
-.about-image img {
-	width: 100%;
-	border-radius: 15px;
-	box-shadow: 
-		0 8px 20px -5px rgba(0, 0, 0, 0.15),
-		0 15px 40px -10px rgba(0, 0, 0, 0.1),
-		0 0 0 1px rgba(255, 255, 255, 0.05);
-	transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.about-image img:hover {
-	transform: translateY(-5px);
-	box-shadow: 
-		0 12px 30px -5px rgba(0, 0, 0, 0.2),
-		0 20px 50px -10px rgba(0, 0, 0, 0.15),
-		0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {
