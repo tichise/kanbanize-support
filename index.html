@@ -1050,6 +1050,35 @@
                 padding: 10px 15px;
             }
         }
+
+        .platform-info {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .info-tag {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .info-tag:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .info-tag i {
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
@@ -1072,14 +1101,34 @@
                 <iframe src="https://www.youtube.com/embed/LkychRHYP4s?si=4YirRwqWhsrNDu5-&autoplay=1&mute=1&loop=1&playlist=LkychRHYP4s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
 
+            <!-- 
             <div class="news-section">
                 <div class="news-list">
                     <a href="https://tichise.medium.com/0e124bd62750" class="news-item" target="_blank">
                         <i class="fas fa-newspaper"></i>
                         <span class="news-date">2024.1.19</span>
-                        <span>iOS・iPadOS・macOS向けタスク管理アプリ「Kanbanize」リリースのお知らせ
-</span>
+                        <span>iOS・iPadOS・macOS向けタスク管理アプリ「Kanbanize」リリースのお知らせ</span>
                     </a>
+                </div>
+            </div>
+            -->
+
+            <div class="platform-info">
+                <div class="info-tag">
+                    <i class="fab fa-apple"></i>
+                    <span>iOS 18+</span>
+                </div>
+                <div class="info-tag">
+                    <i class="fas fa-tablet-alt"></i>
+                    <span>iPadOS 18+</span>
+                </div>
+                <div class="info-tag">
+                    <i class="fas fa-laptop"></i>
+                    <span>macOS 15+</span>
+                </div>
+                <div class="info-tag">
+                    <i class="fas fa-language"></i>
+                    <span>日本語・English</span>
                 </div>
             </div>
         </div>
