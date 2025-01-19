@@ -532,7 +532,7 @@ body {
 @media (max-width: 768px) {
 	.about-image {
 		margin: 1rem auto;
-		padding: 0.5rem;
+		padding: 0rem;
 	}
 }
 
