@@ -248,6 +248,7 @@ body {
 	top: 50%;
 	left: 50%;
 	width: 100%;
+	height: 133.33%;  /* 4:3のアスペクト比で短辺に合わせる */
 	transform: translate(-50%, -50%);
 	border: none;
 	display: block;
