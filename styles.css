@@ -515,7 +515,19 @@ body {
 .about-image img {
 	width: 100%;
 	border-radius: 15px;
-	box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+	box-shadow: 
+		0 10px 30px -5px rgba(0, 0, 0, 0.15),
+		0 20px 60px -10px rgba(0, 0, 0, 0.1),
+		0 0 0 1px rgba(255, 255, 255, 0.05);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-image img:hover {
+	transform: translateY(-5px);
+	box-shadow: 
+		0 15px 40px -5px rgba(0, 0, 0, 0.2),
+		0 30px 70px -10px rgba(0, 0, 0, 0.15),
+		0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {
