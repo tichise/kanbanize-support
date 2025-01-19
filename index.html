@@ -395,10 +395,9 @@
         }
 
         .section {
-            padding: 100px 0;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease;
+            padding: 120px 0 80px;  /* 上部の余白を増やして、下部の余白を調整 */
+            position: relative;
+            overflow: hidden;
         }
 
         .section.visible {
@@ -407,8 +406,8 @@
         }
 
         .section-title {
-            font-size: 2.5em;
-            margin-bottom: 50px;
+            font-size: 2em;
+            margin-bottom: 30px;
             text-align: center;
             position: relative;
             font-weight: 700;
@@ -419,10 +418,6 @@
             position: absolute;
             bottom: -10px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 3px;
-            background: var(--text-color);
         }
 
         .features {
@@ -521,21 +516,24 @@
         }
 
         .about-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            display: flex;
+            gap: 50px;
             align-items: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
         }
 
         .about-content {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 1s ease;
+            flex: 1;
+            min-width: 300px;
         }
 
-        .about-content.visible {
-            opacity: 1;
-            transform: translateX(0);
+        .about-content p {
+            margin-bottom: 20px;
+        }
+
+        .about-content p:last-child {
+            margin-bottom: 0;  /* 最後の段落の下マージンを削除 */
         }
 
         .about-image {
@@ -560,11 +558,8 @@
             .hero h1 {
                 font-size: 2.5em;
             }
-            .about-section {
-                grid-template-columns: 1fr;
-            }
             .section {
-                padding: 60px 0;
+                padding: 100px 0 60px;  /* モバイル用に余白を調整 */
             }
             .news-list {
                 flex-direction: column;
