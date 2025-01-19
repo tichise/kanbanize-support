@@ -1,0 +1,263 @@
+/* Sticky Notes Animation */
+@keyframes peelOff {
+    0% {
+        transform: rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    60% {
+        transform: rotate(10deg) scale(0.9) perspective(500px) rotateX(30deg);
+    }
+    100% {
+        transform: rotate(25deg) scale(0.1) perspective(1000px) rotateX(180deg) translateY(-200px);
+        opacity: 0;
+    }
+}
+
+.sticky-note {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(
+        45deg,
+        rgba(0, 222, 255, 0.3),
+        rgba(255, 102, 153, 0.3),
+        rgba(255, 217, 51, 0.3),
+        rgba(153, 204, 255, 0.3),
+        rgba(128, 230, 128, 0.3)
+    );
+    transform-origin: center bottom;
+    animation: peelOff 4s ease-in-out forwards;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+}
+
+.sticky-notes-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120vh;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* アニメーション定義 */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes navPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.2);
+    }
+}
+
+@keyframes textFlow {
+    0%, 100% {
+        filter: hue-rotate(0deg) brightness(1);
+    }
+    50% {
+        filter: hue-rotate(180deg) brightness(1.2);
+    }
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes colorChange {
+    0% { background: rgba(0, 222, 255, 0.3); }
+    20% { background: rgba(255, 102, 153, 0.3); }
+    40% { background: rgba(255, 217, 51, 0.3); }
+    60% { background: rgba(153, 204, 255, 0.3); }
+    80% { background: rgba(128, 230, 128, 0.3); }
+    100% { background: rgba(0, 222, 255, 0.3); }
+}
+
+@keyframes floatNote {
+    0% {
+        transform: translate(calc(var(--startX) * 1px), calc(var(--startY) * 1px)) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translate(calc(var(--startX) * 1px), calc(var(--startY) * 1px)) rotate(180deg) scale(1);
+    }
+    90% {
+        opacity: 1;
+        transform: translate(calc(var(--endX) * 1px), calc(var(--endY) * 1px)) rotate(540deg) scale(1);
+    }
+    100% {
+        transform: translate(calc(var(--endX) * 1px), calc(var(--endY) * 1px)) rotate(720deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* アニメーション適用 */
+.hero h1 {
+    animation: float 6s ease-in-out infinite;
+}
+
+.hero p {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.5s;
+}
+
+.cta-button {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 1s;
+}
+
+.footer-section {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.footer-copyright span {
+    animation: textFlow 3s ease infinite;
+}
+
+.sticky-note {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    transform-origin: center;
+    animation: floatNote 20s linear infinite;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    clip-path: polygon(
+        var(--clip1, 50% 0),
+        var(--clip2, 100% 50%),
+        var(--clip3, 50% 100%),
+        var(--clip4, 0 50%)
+    );
+    cursor: pointer;
+    mix-blend-mode: plus-lighter;
+}
+
+.sticky-note::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: var(--particle-color, rgba(255,255,255,0.2));
+    filter: blur(2px);
+    animation: colorChange 8s infinite;
+}
+
+.sticky-notes-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120vh;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(255, 0, 128, 0.15),
+        rgba(64, 0, 255, 0.15) 33%,
+        rgba(0, 128, 255, 0.15) 66%,
+        rgba(255, 0, 128, 0.15) 100%
+    );
+    background-size: 300% 300%;
+    animation: gradientMove 15s ease infinite;
+    filter: blur(50px);
+    opacity: 0.5;
+}
+
+.gradient-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        circle at 50% 50%,
+        rgba(128, 0, 255, 0.2),
+        transparent 70%
+    );
+    animation: pulse 8s ease-in-out infinite;
+} 
