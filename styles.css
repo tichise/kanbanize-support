@@ -529,6 +529,10 @@ body {
 	transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.about-image:hover img {
+	transform: scale(1.01);
+}
+
 @media (max-width: 768px) {
 	.about-image {
 		margin: 1rem auto;
