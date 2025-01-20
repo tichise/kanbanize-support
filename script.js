@@ -173,7 +173,17 @@ function updateTexts() {
 	// ヒーローセクション
 	document.querySelector('.hero p').innerHTML = t.hero.subtitle;
 	document.querySelector('.cta-button').textContent = t.hero.download;
-	document.querySelector('.news-item span:last-child').textContent = t.hero.news;
+	
+	// ニュースセクションの表示/非表示
+	const newsSection = document.querySelector('.news-section');
+	if (newsSection) {
+		if (currentLang === 'ja') {
+			newsSection.style.display = 'block';
+			document.querySelector('.news-item span:last-child').textContent = t.hero.news;
+		} else {
+			newsSection.style.display = 'none';
+		}
+	}
 	
 	// アプリについて
 	document.querySelector('#about .section-title').innerHTML = `<i class="fas fa-info-circle"></i> ${t.about.title}`;
