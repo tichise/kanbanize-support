@@ -8,7 +8,7 @@ const translations = {
 		},
 		hero: {
 			subtitle: 'Kanban-style reminder app that syncs with iOS, iPadOS, and macOS reminders',
-			download: 'Coming Soon',
+			download: 'Download on the App Store',
 			news: 'Release of Kanbanize for iOS, iPadOS, and macOS'
 		},
 		about: {
@@ -83,7 +83,7 @@ const translations = {
 		},
 		hero: {
 			subtitle: 'iOS・iPadOS・macOS標準のリマインダーと自動同期する\nカンバン型リマインダーアプリ',
-			download: '近日公開',
+			download: 'App Storeからダウンロード',
 			news: 'iOS・iPadOS・macOS向けタスク管理アプリ「Kanbanize」リリースのお知らせ'
 		},
 		about: {
