@@ -6,13 +6,13 @@
     <title data-lang-ja="Kanbanize - iOS・iPadOS・macOSのリマインダーと同期するカンバン型タスク管理アプリ" data-lang-en="Kanbanize - Kanban-style Task Management App that Syncs with iOS, iPadOS, and macOS Reminders">Kanbanize - iOS・iPadOS・macOSのリマインダーと同期するカンバン型タスク管理アプリ</title>
     
     <!-- SEO メタタグ -->
-    <meta name="description" content="Kanbanizeは、iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリです。直感的な操作で効率的なタスク管理を実現します。">
-    <meta name="keywords" content="Kanbanize, カンバン, タスク管理, リマインダー, iOS, iPadOS, macOS, カンバンボード, タスク整理, 生産性向上">
+    <meta name="description" data-lang-ja="Kanbanizeは、iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリです。直感的な操作で効率的なタスク管理を実現します。" data-lang-en="Kanbanize is a Kanban-style task management app that automatically syncs with iOS, iPadOS, and macOS Reminders. Achieve efficient task management with intuitive operations.">
+    <meta name="keywords" data-lang-ja="Kanbanize, カンバン, タスク管理, リマインダー, iOS, iPadOS, macOS, カンバンボード, タスク整理, 生産性向上" data-lang-en="Kanbanize, Kanban, Task Management, Reminders, iOS, iPadOS, macOS, Kanban Board, Task Organization, Productivity">
     <meta name="author" content="Kanbanize">
     
     <!-- OGP設定 -->
-    <meta property="og:title" content="Kanbanize - カンバン型タスク管理アプリ">
-    <meta property="og:description" content="iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリ。直感的な操作で効率的なタスク管理を実現します。">
+    <meta property="og:title" data-lang-ja="Kanbanize - カンバン型タスク管理アプリ" data-lang-en="Kanbanize - Kanban-style Task Management App">
+    <meta property="og:description" data-lang-ja="iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリ。直感的な操作で効率的なタスク管理を実現します。" data-lang-en="A Kanban-style task management app that automatically syncs with iOS, iPadOS, and macOS Reminders. Achieve efficient task management with intuitive operations.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tichise.github.io/kanbanize-support/">
     <meta property="og:image" content="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c">
@@ -20,8 +20,8 @@
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Kanbanize - カンバン型タスク管理アプリ">
-    <meta name="twitter:description" content="iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリ。直感的な操作で効率的なタスク管理を実現します。">
+    <meta name="twitter:title" data-lang-ja="Kanbanize - カンバン型タスク管理アプリ" data-lang-en="Kanbanize - Kanban-style Task Management App">
+    <meta name="twitter:description" data-lang-ja="iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリ。直感的な操作で効率的なタスク管理を実現します。" data-lang-en="A Kanban-style task management app that automatically syncs with iOS, iPadOS, and macOS Reminders. Achieve efficient task management with intuitive operations.">
     <meta name="twitter:image" content="https://github.com/user-attachments/assets/9cb21e72-146d-4580-84d5-6cda1272532c">
     
     <!-- その他のメタタグ -->
@@ -66,14 +66,33 @@
         // ブラウザの言語設定を取得
         const userLang = navigator.language || navigator.userLanguage;
         
-        // タイトルのローカライズ
+        // メタタグのローカライズ関数
+        function localizeMetaTags() {
+            const lang = userLang.startsWith('ja') ? 'ja' : 'en';
+            document.querySelectorAll('meta[data-lang-ja]').forEach(meta => {
+                const content = meta.getAttribute(`data-lang-${lang}`);
+                if (content) {
+                    if (meta.getAttribute('property')) {
+                        meta.setAttribute('content', content);
+                    } else if (meta.getAttribute('name')) {
+                        meta.setAttribute('content', content);
+                    }
+                }
+            });
+        }
+
+        // DOMContentLoadedイベントでローカライズを実行
         document.addEventListener('DOMContentLoaded', function() {
+            // タイトルのローカライズ
             const title = document.querySelector('title');
             if (userLang.startsWith('ja')) {
                 title.textContent = title.getAttribute('data-lang-ja');
             } else {
                 title.textContent = title.getAttribute('data-lang-en');
             }
+            
+            // メタタグのローカライズ
+            localizeMetaTags();
         });
     </script>
 </head>
