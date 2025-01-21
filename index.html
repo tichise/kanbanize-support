@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kanbanize - iOS・iPadOS・macOSのリマインダーと同期するカンバン型タスク管理アプリ</title>
+    <title data-lang-ja="Kanbanize - iOS・iPadOS・macOSのリマインダーと同期するカンバン型タスク管理アプリ" data-lang-en="Kanbanize - Kanban-style Task Management App that Syncs with iOS, iPadOS, and macOS Reminders">Kanbanize - iOS・iPadOS・macOSのリマインダーと同期するカンバン型タスク管理アプリ</title>
     
     <!-- SEO メタタグ -->
     <meta name="description" content="Kanbanizeは、iOS・iPadOS・macOSの標準リマインダーと自動同期するカンバン型タスク管理アプリです。直感的な操作で効率的なタスク管理を実現します。">
@@ -60,6 +60,21 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    </script>
+
+    <script>
+        // ブラウザの言語設定を取得
+        const userLang = navigator.language || navigator.userLanguage;
+        
+        // タイトルのローカライズ
+        document.addEventListener('DOMContentLoaded', function() {
+            const title = document.querySelector('title');
+            if (userLang.startsWith('ja')) {
+                title.textContent = title.getAttribute('data-lang-ja');
+            } else {
+                title.textContent = title.getAttribute('data-lang-en');
+            }
+        });
     </script>
 </head>
 <body>
