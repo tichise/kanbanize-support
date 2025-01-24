@@ -72,32 +72,24 @@
         
         // メタタグのローカライズ関数
         function localizeMetaTags() {
-            const lang = userLang.startsWith('ja') ? 'ja' : 'en';
-            document.querySelectorAll('meta[data-lang-ja]').forEach(meta => {
-                const content = meta.getAttribute(`data-lang-${lang}`);
+            // botの場合は常に日本語を使用
+            const isBot = /bot|crawler|spider|crawling/i.test(navigator.userAgent);
+            const lang = isBot ? 'ja' : (userLang.startsWith('ja') ? 'ja' : 'en');
+            
+            document.querySelectorAll('[data-lang-ja]').forEach(element => {
+                const content = element.getAttribute(`data-lang-${lang}`);
                 if (content) {
-                    if (meta.getAttribute('property')) {
-                        meta.setAttribute('content', content);
-                    } else if (meta.getAttribute('name')) {
-                        meta.setAttribute('content', content);
+                    if (element.tagName.toLowerCase() === 'title') {
+                        element.textContent = content;
+                    } else if (element.getAttribute('property') || element.getAttribute('name')) {
+                        element.setAttribute('content', content);
                     }
                 }
             });
         }
 
         // DOMContentLoadedイベントでローカライズを実行
-        document.addEventListener('DOMContentLoaded', function() {
-            // タイトルのローカライズ
-            const title = document.querySelector('title');
-            if (userLang.startsWith('ja')) {
-                title.textContent = title.getAttribute('data-lang-ja');
-            } else {
-                title.textContent = title.getAttribute('data-lang-en');
-            }
-            
-            // メタタグのローカライズ
-            localizeMetaTags();
-        });
+        document.addEventListener('DOMContentLoaded', localizeMetaTags);
     </script>
 </head>
 <body>
