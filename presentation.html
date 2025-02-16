@@ -12,6 +12,10 @@
     
     <style>
         :root {
+            --primary-color: #007AFF;
+            --secondary-color: #0056b3;
+            --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
             --slide-duration: 10s;
         }
         
@@ -42,8 +46,9 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 2rem;
+            padding: 3rem;
             text-align: center;
+            background: var(--bg-gradient);
         }
 
         .slide.active {
@@ -51,9 +56,9 @@
         }
 
         .slide h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: #333;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 2rem;
         }
 
         .slide p {
@@ -65,17 +70,21 @@
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .feature-item {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
         }
 
         .feature-item i {
@@ -100,11 +109,22 @@
             height: 150px;
         }
 
-        .control-panel {
+        .settings-panel {
             position: fixed;
             bottom: 2rem;
             left: 2rem;
             z-index: 1000;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .settings-panel select {
+            margin-left: 1rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid #ddd;
         }
 
         .toggle-autoplay {
@@ -166,6 +186,11 @@
                     <h3>カンバン型レイアウト</h3>
                     <p>直感的なタスク管理</p>
                 </div>
+                <div class="feature-item">
+                    <i class="fas fa-arrows-alt"></i>
+                    <h3>ドラッグ＆ドロップ</h3>
+                    <p>簡単な操作性</p>
+                </div>
             </div>
         </div>
 
@@ -175,6 +200,28 @@
             <p>ドラッグ＆ドロップで簡単にタスクを管理<br>3つのカラムで進捗を可視化</p>
             <img src="workflow-demo.png" alt="ワークフローのデモ" style="max-width: 70%; height: auto;">
         </div>
+
+        <!-- スライド4: 将来の機能 -->
+        <div class="slide">
+            <h1>今後の展開</h1>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-code-branch"></i>
+                    <h3>ワークフローの統合</h3>
+                    <p>GitHub風のワークフロー連携</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-robot"></i>
+                    <h3>AIエージェント</h3>
+                    <p>タスクの自動振り分け</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>アクティビティ解析</h3>
+                    <p>視覚的な進捗管理</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="qr-container">
@@ -182,10 +229,16 @@
         <p>App Storeで<br>ダウンロード</p>
     </div>
 
-    <div class="control-panel">
+    <div class="settings-panel">
         <button class="toggle-autoplay">
             <i class="fas fa-pause"></i> 自動再生を停止
         </button>
+        <select id="duration-select">
+            <option value="5000">5秒</option>
+            <option value="10000" selected>10秒</option>
+            <option value="15000">15秒</option>
+            <option value="20000">20秒</option>
+        </select>
     </div>
 
     <div class="slide-indicator">
@@ -202,8 +255,18 @@
         let isPlaying = true;
         let slideInterval;
 
+        const durationSelect = document.getElementById('duration-select');
+        
+        durationSelect.addEventListener('change', () => {
+            if (isPlaying) {
+                stopAutoPlay();
+                startAutoPlay();
+            }
+        });
+
         function startAutoPlay() {
-            slideInterval = setInterval(nextSlide, 10000); // 10秒ごとに切り替え
+            const duration = parseInt(durationSelect.value);
+            slideInterval = setInterval(nextSlide, duration);
         }
 
         function stopAutoPlay() {
