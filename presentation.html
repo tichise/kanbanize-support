@@ -46,9 +46,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 3rem;
+            padding: 2rem;
             text-align: center;
-            background: var(--bg-gradient);
         }
 
         .slide.active {
@@ -56,9 +55,9 @@
         }
 
         .slide h1 {
-            color: var(--primary-color);
-            font-weight: 700;
-            margin-bottom: 2rem;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
         }
 
         .slide p {
@@ -70,21 +69,17 @@
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
         .feature-item {
-            background: white;
-            border-radius: 1.5rem;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .feature-item i {
@@ -109,22 +104,11 @@
             height: 150px;
         }
 
-        .settings-panel {
+        .control-panel {
             position: fixed;
             bottom: 2rem;
             left: 2rem;
             z-index: 1000;
-            background: white;
-            padding: 1rem;
-            border-radius: 1rem;
-            box-shadow: var(--card-shadow);
-        }
-
-        .settings-panel select {
-            margin-left: 1rem;
-            padding: 0.5rem;
-            border-radius: 0.5rem;
-            border: 1px solid #ddd;
         }
 
         .toggle-autoplay {
@@ -161,72 +145,99 @@
         .indicator.active {
             background: #007AFF;
         }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .navigation-controls {
+            position: fixed;
+            bottom: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+            pointer-events: none;
+        }
+
+        .nav-button {
+            background: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.1);
+        }
+
+        .feature-screenshot {
+            max-width: 80%;
+            height: auto;
+            margin: 2rem 0;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+        }
     </style>
 </head>
 <body>
     <div class="slider-container">
         <!-- スライド1: メイン紹介 -->
         <div class="slide active">
-            <h1>Kanbanize</h1>
+            <div class="logo">Kanbanize</div>
             <p>iOS・iPadOS・macOS標準のリマインダーと<br>自動同期するカンバン型タスク管理アプリ</p>
-            <img src="app-screenshot.png" alt="アプリのスクリーンショット" style="max-width: 60%; height: auto;">
+            <img src="app-screenshot.png" alt="アプリのスクリーンショット" class="feature-screenshot">
         </div>
 
-        <!-- スライド2: 主要機能 -->
+        <!-- スライド2: 自動同期機能 -->
         <div class="slide">
-            <h1>主な特徴</h1>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <i class="fas fa-sync-alt"></i>
-                    <h3>自動同期</h3>
-                    <p>標準リマインダーと完全同期</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-columns"></i>
-                    <h3>カンバン型レイアウト</h3>
-                    <p>直感的なタスク管理</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-arrows-alt"></i>
-                    <h3>ドラッグ＆ドロップ</h3>
-                    <p>簡単な操作性</p>
-                </div>
-            </div>
+            <h1>自動同期機能</h1>
+            <p>標準リマインダーとシームレスに同期<br>EventKitを使用して常に最新の状態を維持</p>
+            <img src="sync-demo.png" alt="同期機能のデモ" class="feature-screenshot">
         </div>
 
-        <!-- スライド3: ワークフロー -->
+        <!-- スライド3: カンバンボード -->
         <div class="slide">
-            <h1>シンプルな操作性</h1>
-            <p>ドラッグ＆ドロップで簡単にタスクを管理<br>3つのカラムで進捗を可視化</p>
-            <img src="workflow-demo.png" alt="ワークフローのデモ" style="max-width: 70%; height: auto;">
+            <h1>カンバン型レイアウト</h1>
+            <p>「TODO」「進行中」「完了」の3段階で管理<br>直感的な操作で効率的なタスク管理を実現</p>
+            <img src="kanban-board.png" alt="カンバンボードの画面" class="feature-screenshot">
         </div>
 
-        <!-- スライド4: 将来の機能 -->
+        <!-- スライド4: ドラッグ＆ドロップ -->
         <div class="slide">
-            <h1>今後の展開</h1>
-            <div class="feature-grid">
-                <div class="feature-item">
-                    <i class="fas fa-code-branch"></i>
-                    <h3>ワークフローの統合</h3>
-                    <p>GitHub風のワークフロー連携</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-robot"></i>
-                    <h3>AIエージェント</h3>
-                    <p>タスクの自動振り分け</p>
-                </div>
-                <div class="feature-item">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>アクティビティ解析</h3>
-                    <p>視覚的な進捗管理</p>
-                </div>
-            </div>
+            <h1>ドラッグ＆ドロップ</h1>
+            <p>タスクの進行状況を直感的に管理<br>スムーズな操作性でストレスフリー</p>
+            <img src="drag-drop.png" alt="ドラッグ＆ドロップのデモ" class="feature-screenshot">
+        </div>
+
+        <!-- スライド5: タイトル候補機能 -->
+        <div class="slide">
+            <h1>タイトル候補機能</h1>
+            <p>過去のタスクから候補を表示<br>素早いタスク作成をサポート</p>
+            <img src="title-suggestions.png" alt="タイトル候補機能のデモ" class="feature-screenshot">
         </div>
     </div>
 
     <div class="qr-container">
         <img src="app-store-qr.png" alt="App Store QRコード">
         <p>App Storeで<br>ダウンロード</p>
+    </div>
+
+    <div class="navigation-controls">
+        <button class="nav-button prev-slide">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-button next-slide">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 
     <div class="settings-panel">
@@ -255,18 +266,11 @@
         let isPlaying = true;
         let slideInterval;
 
-        const durationSelect = document.getElementById('duration-select');
-        
-        durationSelect.addEventListener('change', () => {
-            if (isPlaying) {
-                stopAutoPlay();
-                startAutoPlay();
-            }
-        });
+        const prevButton = document.querySelector('.prev-slide');
+        const nextButton = document.querySelector('.next-slide');
 
         function startAutoPlay() {
-            const duration = parseInt(durationSelect.value);
-            slideInterval = setInterval(nextSlide, duration);
+            slideInterval = setInterval(nextSlide, 10000); // 10秒ごとに切り替え
         }
 
         function stopAutoPlay() {
@@ -302,6 +306,16 @@
                 currentSlide = index;
                 updateSlide();
             });
+        });
+
+        prevButton.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
         });
 
         // 初期化
