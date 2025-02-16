@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanbanize - カンバン型タスク管理アプリ</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --slide-duration: 10s;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+        }
+
+        .slider-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        .slide p {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: #007AFF;
+            margin-bottom: 1rem;
+        }
+
+        .qr-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .qr-container img {
+            width: 150px;
+            height: 150px;
+        }
+
+        .control-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+
+        .toggle-autoplay {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .toggle-autoplay:hover {
+            background: #0056b3;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+        }
+
+        .indicator.active {
+            background: #007AFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <!-- スライド1: メイン紹介 -->
+        <div class="slide active">
+            <h1>Kanbanize</h1>
+            <p>iOS・iPadOS・macOS標準のリマインダーと<br>自動同期するカンバン型タスク管理アプリ</p>
+            <img src="app-screenshot.png" alt="アプリのスクリーンショット" style="max-width: 60%; height: auto;">
+        </div>
+
+        <!-- スライド2: 主要機能 -->
+        <div class="slide">
+            <h1>主な特徴</h1>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>自動同期</h3>
+                    <p>標準リマインダーと完全同期</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-columns"></i>
+                    <h3>カンバン型レイアウト</h3>
+                    <p>直感的なタスク管理</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- スライド3: ワークフロー -->
+        <div class="slide">
+            <h1>シンプルな操作性</h1>
+            <p>ドラッグ＆ドロップで簡単にタスクを管理<br>3つのカラムで進捗を可視化</p>
+            <img src="workflow-demo.png" alt="ワークフローのデモ" style="max-width: 70%; height: auto;">
+        </div>
+    </div>
+
+    <div class="qr-container">
+        <img src="app-store-qr.png" alt="App Store QRコード">
+        <p>App Storeで<br>ダウンロード</p>
+    </div>
+
+    <div class="control-panel">
+        <button class="toggle-autoplay">
+            <i class="fas fa-pause"></i> 自動再生を停止
+        </button>
+    </div>
+
+    <div class="slide-indicator">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const toggleButton = document.querySelector('.toggle-autoplay');
+        let isPlaying = true;
+        let slideInterval;
+
+        function startAutoPlay() {
+            slideInterval = setInterval(nextSlide, 10000); // 10秒ごとに切り替え
+        }
+
+        function stopAutoPlay() {
+            clearInterval(slideInterval);
+        }
+
+        function updateSlide() {
+            slides.forEach(slide => slide.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        toggleButton.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                startAutoPlay();
+                toggleButton.innerHTML = '<i class="fas fa-pause"></i> 自動再生を停止';
+            } else {
+                stopAutoPlay();
+                toggleButton.innerHTML = '<i class="fas fa-play"></i> 自動再生を開始';
+            }
+        });
+
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlide();
+            });
+        });
+
+        // 初期化
+        startAutoPlay();
+    </script>
+</body>
+</html> 
