@@ -51,7 +51,7 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.5s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -72,7 +72,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 700;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             position: relative;
             display: inline-block;
         }
@@ -131,13 +130,13 @@
             border-radius: 1.5rem;
             box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-color);
         }
 
         .qr-container:hover {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         .qr-container img {
@@ -171,7 +170,7 @@
             border-radius: 1.5rem;
             cursor: pointer;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: transform 0.2s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -179,7 +178,6 @@
 
         .toggle-autoplay:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
         }
 
         .toggle-autoplay i {
@@ -207,7 +205,9 @@
             width: 10px;
             height: 10px;
             background: rgba(255, 255, 255, 0.3);
-            position: relative;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .indicator.active {
@@ -215,136 +215,19 @@
             transform: scale(1.2);
         }
 
-        .indicator.active::after {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: 50%;
-            background: var(--premium-gradient);
-            opacity: 0.5;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 0.5;
-            }
-            70% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0;
-            }
-        }
-
-        .logo {
-            font-size: 4.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            letter-spacing: -0.02em;
-            background: var(--premium-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px var(--glow-color);
-            animation: glow 2s ease-in-out infinite alternate;
-            position: relative;
-        }
-
-        .logo::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: var(--premium-gradient);
-            border-radius: 3px;
-            animation: widthPulse 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes widthPulse {
-            from {
-                width: 100px;
-                opacity: 0.5;
-            }
-            to {
-                width: 150px;
-                opacity: 1;
-            }
-        }
-
-        @keyframes glow {
-            from {
-                text-shadow: 0 0 20px var(--glow-color);
-            }
-            to {
-                text-shadow: 0 0 40px var(--glow-color),
-                            0 0 80px var(--glow-color);
-            }
-        }
-
-        .navigation-controls {
-            position: fixed;
-            bottom: 50%;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 2rem;
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        .nav-button {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .nav-button i {
-            font-size: 1.5rem;
-            background: var(--premium-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
-        }
-
-        .feature-screenshot {
-            max-width: 80%;
-            height: auto;
-            margin: 2rem 0;
-            border-radius: 1rem;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-screenshot:hover {
-            transform: scale(1.02) translateY(-10px);
-            box-shadow: 0 0 50px rgba(0, 229, 255, 0.3);
-        }
-
         .hero-content {
             text-align: center;
             padding: 2rem;
-            animation: fadeIn 1s ease-in-out;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: simpleSlideUp 0.5s ease forwards;
+        }
+
+        @keyframes simpleSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .platform-info {
@@ -365,12 +248,11 @@
             padding: 0.8rem 1.5rem;
             border-radius: 2rem;
             box-shadow: var(--card-shadow);
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
         .info-tag:hover {
             transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.15);
         }
 
         .info-tag i {
@@ -382,17 +264,6 @@
 
         .info-tag span {
             color: var(--text-color);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .settings-panel {
@@ -408,7 +279,7 @@
             -webkit-backdrop-filter: blur(10px);
             padding: 0.5rem;
             border-radius: 2rem;
-            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
@@ -416,18 +287,13 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             padding: 0.5rem 1rem;
             border-radius: 1.5rem;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            outline: none;
+            transition: background-color 0.2s ease;
         }
 
         #duration-select:hover {
             background: rgba(255, 255, 255, 0.2);
-            border-color: var(--accent-color);
         }
 
         #duration-select option {
@@ -508,15 +374,6 @@
         <p>App Storeで<br>ダウンロード</p>
     </div>
 
-    <div class="navigation-controls">
-        <button class="nav-button prev-slide">
-            <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="nav-button next-slide">
-            <i class="fas fa-chevron-right"></i>
-        </button>
-    </div>
-
     <div class="settings-panel">
         <button class="toggle-autoplay">
             <i class="fas fa-pause"></i>
@@ -548,10 +405,6 @@
         let slideInterval;
         let currentDuration = parseInt(durationSelect.value);
 
-        const prevButton = document.querySelector('.prev-slide');
-        const nextButton = document.querySelector('.next-slide');
-
-        // インジケーターの数をスライド数に合わせる
         function updateIndicators() {
             const indicatorContainer = document.querySelector('.slide-indicator');
             indicatorContainer.innerHTML = '';
@@ -594,11 +447,6 @@
             updateSlide();
         }
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlide();
-        }
-
         toggleButton.addEventListener('click', () => {
             isPlaying = !isPlaying;
             if (isPlaying) {
@@ -617,27 +465,15 @@
             }
         });
 
-        prevButton.addEventListener('click', () => {
-            prevSlide();
-            if (isPlaying) {
-                startAutoPlay();
-            }
-        });
-
-        nextButton.addEventListener('click', () => {
-            nextSlide();
-            if (isPlaying) {
-                startAutoPlay();
-            }
-        });
-
-        // キーボードナビゲーションを追加
+        // キーボードナビゲーション
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
-                prevSlide();
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlide();
                 if (isPlaying) startAutoPlay();
             } else if (e.key === 'ArrowRight') {
-                nextSlide();
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlide();
                 if (isPlaying) startAutoPlay();
             }
         });
