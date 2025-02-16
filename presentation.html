@@ -17,6 +17,7 @@
             --bg-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             --card-shadow: 0 4px 6px rgba(0,0,0,0.1);
             --slide-duration: 10s;
+            --hero-bg: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
         
         * {
@@ -28,12 +29,14 @@
         body {
             font-family: 'Noto Sans JP', sans-serif;
             overflow: hidden;
+            background: var(--hero-bg);
         }
 
         .slider-container {
             width: 100vw;
             height: 100vh;
             position: relative;
+            background: var(--hero-bg);
         }
 
         .slide {
@@ -48,6 +51,7 @@
             align-items: center;
             padding: 2rem;
             text-align: center;
+            background: var(--hero-bg);
         }
 
         .slide.active {
@@ -57,7 +61,8 @@
         .slide h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            color: #333;
+            color: var(--primary-color);
+            font-weight: 700;
         }
 
         .slide p {
@@ -76,15 +81,20 @@
         }
 
         .feature-item {
-            background: #f8f9fa;
+            background: white;
             padding: 2rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
         }
 
         .feature-item i {
             font-size: 2.5rem;
-            color: #007AFF;
+            color: var(--primary-color);
             margin-bottom: 1rem;
         }
 
@@ -95,8 +105,13 @@
             background: white;
             padding: 1rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: var(--card-shadow);
             text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .qr-container:hover {
+            transform: scale(1.05);
         }
 
         .qr-container img {
@@ -112,17 +127,18 @@
         }
 
         .toggle-autoplay {
-            background: #007AFF;
+            background: var(--primary-color);
             color: white;
             border: none;
             padding: 1rem 2rem;
             border-radius: 2rem;
             cursor: pointer;
             font-size: 1.2rem;
+            transition: background-color 0.3s ease;
         }
 
         .toggle-autoplay:hover {
-            background: #0056b3;
+            background: var(--secondary-color);
         }
 
         .slide-indicator {
@@ -132,6 +148,7 @@
             transform: translateX(-50%);
             display: flex;
             gap: 1rem;
+            z-index: 1000;
         }
 
         .indicator {
@@ -140,17 +157,19 @@
             border-radius: 50%;
             background: #ddd;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
         .indicator.active {
-            background: #007AFF;
+            background: var(--primary-color);
         }
 
         .logo {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: var(--primary-color);
             margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
         .navigation-controls {
@@ -161,6 +180,7 @@
             justify-content: space-between;
             padding: 0 2rem;
             pointer-events: none;
+            z-index: 1000;
         }
 
         .nav-button {
@@ -172,11 +192,14 @@
             box-shadow: var(--card-shadow);
             cursor: pointer;
             pointer-events: auto;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            color: var(--primary-color);
         }
 
         .nav-button:hover {
             transform: scale(1.1);
+            background: var(--primary-color);
+            color: white;
         }
 
         .feature-screenshot {
@@ -185,35 +208,17 @@
             margin: 2rem 0;
             border-radius: 1rem;
             box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-screenshot:hover {
+            transform: scale(1.02);
         }
 
         .hero-content {
             text-align: center;
             padding: 2rem;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-content p {
-            font-size: 1.8rem;
-            line-height: 1.6;
-            color: #666;
-            margin-bottom: 2rem;
-        }
-
-        .sticky-notes-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.1;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .platform-info {
@@ -231,10 +236,85 @@
             padding: 0.5rem 1rem;
             border-radius: 2rem;
             box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .info-tag:hover {
+            transform: scale(1.05);
         }
 
         .info-tag i {
             color: var(--primary-color);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        #duration-select {
+            background: white;
+            border: 2px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            font-size: 1rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        #duration-select:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        #duration-select option {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .toggle-autoplay {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-autoplay:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .toggle-autoplay i {
+            font-size: 1.2rem;
         }
     </style>
 </head>
@@ -244,7 +324,7 @@
         <div class="slide active">
             <div class="sticky-notes-bg" id="heroNotes"></div>
             <div class="hero-content">
-                <h1>Kanbanize</h1>
+                <h1 class="logo">Kanbanize</h1>
                 <p>iOS・iPadOS・macOS標準のリマインダーと<br>自動同期するカンバン型タスク管理アプリ</p>
                 <div class="platform-info">
                     <div class="info-tag">
@@ -259,6 +339,10 @@
                         <i class="fas fa-laptop"></i>
                         <span>macOS 15+</span>
                     </div>
+                    <div class="info-tag">
+                        <i class="fas fa-language"></i>
+                        <span>日本語・English</span>
+                    </div>
                 </div>
                 <img src="app-screenshot.png" alt="アプリのスクリーンショット" class="feature-screenshot">
             </div>
@@ -266,30 +350,38 @@
 
         <!-- スライド2: 自動同期機能 -->
         <div class="slide">
-            <h1>自動同期機能</h1>
-            <p>標準リマインダーとシームレスに同期<br>EventKitを使用して常に最新の状態を維持</p>
-            <img src="sync-demo.png" alt="同期機能のデモ" class="feature-screenshot">
+            <div class="hero-content">
+                <h1><i class="fas fa-sync-alt"></i> 自動同期機能</h1>
+                <p>標準リマインダーとシームレスに同期<br>EventKitを使用して常に最新の状態を維持</p>
+                <img src="sync-demo.png" alt="同期機能のデモ" class="feature-screenshot">
+            </div>
         </div>
 
         <!-- スライド3: カンバンボード -->
         <div class="slide">
-            <h1>カンバン型レイアウト</h1>
-            <p>「TODO」「進行中」「完了」の3段階で管理<br>直感的な操作で効率的なタスク管理を実現</p>
-            <img src="kanban-board.png" alt="カンバンボードの画面" class="feature-screenshot">
+            <div class="hero-content">
+                <h1><i class="fas fa-columns"></i> カンバン型レイアウト</h1>
+                <p>「TODO」「進行中」「完了」の3段階で管理<br>直感的な操作で効率的なタスク管理を実現</p>
+                <img src="kanban-board.png" alt="カンバンボードの画面" class="feature-screenshot">
+            </div>
         </div>
 
         <!-- スライド4: ドラッグ＆ドロップ -->
         <div class="slide">
-            <h1>ドラッグ＆ドロップ</h1>
-            <p>タスクの進行状況を直感的に管理<br>スムーズな操作性でストレスフリー</p>
-            <img src="drag-drop.png" alt="ドラッグ＆ドロップのデモ" class="feature-screenshot">
+            <div class="hero-content">
+                <h1><i class="fas fa-arrows-alt"></i> ドラッグ＆ドロップ</h1>
+                <p>タスクの進行状況を直感的に管理<br>スムーズな操作性でストレスフリー</p>
+                <img src="drag-drop.png" alt="ドラッグ＆ドロップのデモ" class="feature-screenshot">
+            </div>
         </div>
 
         <!-- スライド5: タイトル候補機能 -->
         <div class="slide">
-            <h1>タイトル候補機能</h1>
-            <p>過去のタスクから候補を表示<br>素早いタスク作成をサポート</p>
-            <img src="title-suggestions.png" alt="タイトル候補機能のデモ" class="feature-screenshot">
+            <div class="hero-content">
+                <h1><i class="fas fa-lightbulb"></i> タイトル候補機能</h1>
+                <p>過去のタスクから候補を表示<br>素早いタスク作成をサポート</p>
+                <img src="title-suggestions.png" alt="タイトル候補機能のデモ" class="feature-screenshot">
+            </div>
         </div>
     </div>
 
@@ -309,7 +401,8 @@
 
     <div class="settings-panel">
         <button class="toggle-autoplay">
-            <i class="fas fa-pause"></i> 自動再生を停止
+            <i class="fas fa-pause"></i>
+            <span>自動再生を停止</span>
         </button>
         <select id="duration-select">
             <option value="5000">5秒</option>
@@ -330,14 +423,17 @@
         const slides = document.querySelectorAll('.slide');
         const indicators = document.querySelectorAll('.indicator');
         const toggleButton = document.querySelector('.toggle-autoplay');
+        const durationSelect = document.querySelector('#duration-select');
         let isPlaying = true;
         let slideInterval;
+        let currentDuration = parseInt(durationSelect.value);
 
         const prevButton = document.querySelector('.prev-slide');
         const nextButton = document.querySelector('.next-slide');
 
         function startAutoPlay() {
-            slideInterval = setInterval(nextSlide, 10000); // 10秒ごとに切り替え
+            stopAutoPlay(); // 既存のインターバルをクリア
+            slideInterval = setInterval(nextSlide, currentDuration);
         }
 
         function stopAutoPlay() {
@@ -357,14 +453,26 @@
             updateSlide();
         }
 
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        }
+
         toggleButton.addEventListener('click', () => {
             isPlaying = !isPlaying;
             if (isPlaying) {
                 startAutoPlay();
-                toggleButton.innerHTML = '<i class="fas fa-pause"></i> 自動再生を停止';
+                toggleButton.innerHTML = '<i class="fas fa-pause"></i><span>自動再生を停止</span>';
             } else {
                 stopAutoPlay();
-                toggleButton.innerHTML = '<i class="fas fa-play"></i> 自動再生を開始';
+                toggleButton.innerHTML = '<i class="fas fa-play"></i><span>自動再生を開始</span>';
+            }
+        });
+
+        durationSelect.addEventListener('change', (e) => {
+            currentDuration = parseInt(e.target.value);
+            if (isPlaying) {
+                startAutoPlay();
             }
         });
 
@@ -372,17 +480,24 @@
             indicator.addEventListener('click', () => {
                 currentSlide = index;
                 updateSlide();
+                if (isPlaying) {
+                    startAutoPlay(); // インジケーターをクリックした後に自動再生をリセット
+                }
             });
         });
 
         prevButton.addEventListener('click', () => {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            updateSlide();
+            prevSlide();
+            if (isPlaying) {
+                startAutoPlay(); // ボタンをクリックした後に自動再生をリセット
+            }
         });
 
         nextButton.addEventListener('click', () => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlide();
+            nextSlide();
+            if (isPlaying) {
+                startAutoPlay(); // ボタンをクリックした後に自動再生をリセット
+            }
         });
 
         // 初期化
