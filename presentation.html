@@ -14,12 +14,16 @@
         :root {
             --primary-color: #007AFF;
             --secondary-color: #0056b3;
+            --accent-color: #00E5FF;
             --bg-color: #000000;
             --text-color: #ffffff;
             --card-bg: rgba(255, 255, 255, 0.1);
             --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
             --slide-duration: 10s;
             --hero-bg: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            --premium-gradient: linear-gradient(135deg, #00E5FF 0%, #007AFF 100%);
+            --text-gradient: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            --glow-color: rgba(0, 229, 255, 0.5);
         }
         
         * {
@@ -64,15 +68,30 @@
         .slide h1 {
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
-            color: var(--text-color);
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            position: relative;
+            display: inline-block;
+        }
+
+        .slide h1 i {
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 0.5rem;
         }
 
         .slide p {
             font-size: 1.8rem;
             margin-bottom: 2rem;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
         }
 
         .feature-grid {
@@ -105,13 +124,15 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: var(--card-bg);
-            padding: 1rem;
-            border-radius: 1rem;
-            box-shadow: var(--card-shadow);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
             text-align: center;
             transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: var(--text-color);
         }
 
@@ -122,6 +143,16 @@
         .qr-container img {
             width: 150px;
             height: 150px;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .qr-container p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            margin-top: 0.5rem;
         }
 
         .control-panel {
@@ -132,9 +163,10 @@
         }
 
         .toggle-autoplay {
-            background: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--premium-gradient);
+            border: none;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             padding: 0.8rem 1.5rem;
             border-radius: 1.5rem;
             cursor: pointer;
@@ -146,8 +178,8 @@
         }
 
         .toggle-autoplay:hover {
-            background: rgba(255, 255, 255, 0.15);
             transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
         }
 
         .toggle-autoplay i {
@@ -162,46 +194,99 @@
             display: flex;
             gap: 1rem;
             z-index: 1000;
-            background: var(--card-bg);
-            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
             border-radius: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
         }
 
         .indicator {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+            width: 10px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
 
         .indicator.active {
-            background: var(--text-color);
+            background: var(--premium-gradient);
             transform: scale(1.2);
         }
 
+        .indicator.active::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: var(--premium-gradient);
+            opacity: 0.5;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            70% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+
         .logo {
-            font-size: 3.5rem;
+            font-size: 4.5rem;
             font-weight: 700;
-            color: var(--text-color);
-            margin-bottom: 1rem;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            background: var(--premium-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: glow 1.5s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px var(--glow-color);
+            animation: glow 2s ease-in-out infinite alternate;
+            position: relative;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--premium-gradient);
+            border-radius: 3px;
+            animation: widthPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes widthPulse {
+            from {
+                width: 100px;
+                opacity: 0.5;
+            }
+            to {
+                width: 150px;
+                opacity: 1;
+            }
         }
 
         @keyframes glow {
             from {
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+                text-shadow: 0 0 20px var(--glow-color);
             }
             to {
-                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+                text-shadow: 0 0 40px var(--glow-color),
+                            0 0 80px var(--glow-color);
             }
         }
 
@@ -217,22 +302,28 @@
         }
 
         .nav-button {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            box-shadow: var(--card-shadow);
-            cursor: pointer;
-            pointer-events: auto;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-button i {
+            font-size: 1.5rem;
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-button:hover {
+            background: rgba(255, 255, 255, 0.2);
             transform: scale(1.1);
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--text-color);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.3);
         }
 
         .feature-screenshot {
@@ -240,12 +331,14 @@
             height: auto;
             margin: 2rem 0;
             border-radius: 1rem;
-            box-shadow: var(--card-shadow);
-            transition: transform 0.3s ease;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .feature-screenshot:hover {
-            transform: scale(1.02);
+            transform: scale(1.02) translateY(-10px);
+            box-shadow: 0 0 50px rgba(0, 229, 255, 0.3);
         }
 
         .hero-content {
@@ -265,12 +358,14 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--card-bg);
-            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
             border-radius: 2rem;
             box-shadow: var(--card-shadow);
             transition: transform 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .info-tag:hover {
@@ -279,7 +374,10 @@
         }
 
         .info-tag i {
-            color: var(--primary-color);
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2rem;
         }
 
         .info-tag span {
@@ -305,27 +403,31 @@
             display: flex;
             gap: 1rem;
             align-items: center;
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 0.5rem;
             border-radius: 2rem;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         #duration-select {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             padding: 0.5rem 1rem;
             border-radius: 1.5rem;
             font-size: 1rem;
-            color: var(--text-color);
             cursor: pointer;
             transition: all 0.3s ease;
             outline: none;
         }
 
         #duration-select:hover {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--accent-color);
         }
 
         #duration-select option {
@@ -402,7 +504,7 @@
     </div>
 
     <div class="qr-container">
-        <img src="app-store-qr.png" alt="App Store QRコード">
+        <img src="images/qr.png" alt="App Store QRコード">
         <p>App Storeで<br>ダウンロード</p>
     </div>
 
