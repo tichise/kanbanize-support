@@ -1092,3 +1092,70 @@ body {
 .info-tag i {
 	font-size: 1.1em;
 }
+
+/* デバイスショーケースのスタイル */
+.device-showcase {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    perspective: 1000px;
+}
+
+.device {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+.device:hover {
+    transform: rotateY(-10deg);
+}
+
+.device.iphone {
+    width: 300px;
+}
+
+.device.ipad {
+    width: 500px;
+}
+
+.device img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* YouTube遅延読み込み用スタイル */
+#youtube-placeholder {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    background: #000;
+    cursor: pointer;
+}
+
+.placeholder-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-button {
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
