@@ -92,6 +92,23 @@
         // DOMContentLoadedイベントでローカライズを実行
         document.addEventListener('DOMContentLoaded', localizeMetaTags);
     </script>
+
+    <!-- 構造化データの追加 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Kanbanize",
+      "description": "iOS/iPadOS/macOS標準リマインダーと自動同期する唯一のカンバン型タスク管理ソリューション",
+      "operatingSystem": "iOS 18+, iPadOS 18+, macOS 15+",
+      "applicationCategory": "ProductivityApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+      }
+    }
+    </script>
 </head>
 <body>
     <nav class="nav">
@@ -275,11 +292,5 @@
         </div>
     </footer>
     <script src="script.js"></script>
-
-    <!-- 隠しテキスト対策のリッチスニペット -->
-    <div class="sr-only">
-        <h1>Appleリマインダー連携カンバンアプリ</h1>
-        <p>iOS/iPadOS/macOS標準リマインダーと自動同期する唯一のカンバン型タスク管理ソリューション</p>
-    </div>
 </body>
 </html> 
