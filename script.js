@@ -387,3 +387,31 @@ const observer = new IntersectionObserver((entries) => {
 });
 
 document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+
+// スクリーンショットスライダーの初期化
+const screenshotSlider = new Swiper('.screenshot-slider', {
+	slidesPerView: 'auto',
+	centeredSlides: true,
+	spaceBetween: 30,
+	loop: true,
+	autoplay: {
+		delay: 3000,
+		disableOnInteraction: false,
+	},
+	pagination: {
+		el: '.swiper-pagination',
+		clickable: true,
+	},
+	navigation: {
+		nextEl: '.swiper-button-next',
+		prevEl: '.swiper-button-prev',
+	},
+	breakpoints: {
+		768: {
+			slidesPerView: 2.5,
+		},
+		1024: {
+			slidesPerView: 3.5,
+		}
+	}
+});
