@@ -387,3 +387,52 @@ const observer = new IntersectionObserver((entries) => {
 });
 
 document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+
+document.addEventListener('DOMContentLoaded', () => {
+	const wrapper = document.querySelector('.screenshot-wrapper');
+	const items = document.querySelectorAll('.screenshot-item');
+	const prevButton = document.querySelector('.prev-button');
+	const nextButton = document.querySelector('.next-button');
+	const dotsContainer = document.querySelector('.screenshot-dots');
+
+	let currentIndex = 0;
+
+	// ドット生成
+	items.forEach((_, index) => {
+		const dot = document.createElement('div');
+		dot.classList.add('dot');
+		if (index === 0) dot.classList.add('active');
+		dot.addEventListener('click', () => goToSlide(index));
+		dotsContainer.appendChild(dot);
+	});
+
+	const dots = document.querySelectorAll('.dot');
+
+	function updateDots() {
+		dots.forEach((dot, index) => {
+			dot.classList.toggle('active', index === currentIndex);
+		});
+	}
+
+	function goToSlide(index) {
+		currentIndex = index;
+		wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+		updateDots();
+	}
+
+	prevButton.addEventListener('click', () => {
+		currentIndex = (currentIndex - 1 + items.length) % items.length;
+		goToSlide(currentIndex);
+	});
+
+	nextButton.addEventListener('click', () => {
+		currentIndex = (currentIndex + 1) % items.length;
+		goToSlide(currentIndex);
+	});
+
+	// 自動スライド
+	setInterval(() => {
+		currentIndex = (currentIndex + 1) % items.length;
+		goToSlide(currentIndex);
+	}, 5000);
+});
