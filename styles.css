@@ -297,12 +297,12 @@ body {
 }
 
 .hero h1 {
+	font-family: 'Rubik', ui-rounded, -apple-system-ui-rounded, "SF Pro Rounded", sans-serif;
 	font-size: 4em;
 	font-weight: 700;
 	letter-spacing: 2px;
 	animation: float 6s ease-in-out infinite;
 	margin: 0;
-	font-family: ui-rounded, -apple-system-ui-rounded, "SF Pro Rounded", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	background: linear-gradient(
 		to right,
