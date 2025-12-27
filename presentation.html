@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanbanize - カンバン型タスク管理アプリ</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #007AFF;
+            --secondary-color: #0056b3;
+            --accent-color: #00E5FF;
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --slide-duration: 10s;
+            --hero-bg: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            --premium-gradient: linear-gradient(135deg, #00E5FF 0%, #007AFF 100%);
+            --text-gradient: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            --glow-color: rgba(0, 229, 255, 0.5);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            overflow: hidden;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .slider-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: var(--hero-bg);
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            background: var(--hero-bg);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--text-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .slide h1 i {
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 0.5rem;
+        }
+
+        .slide p {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-screenshot {
+            max-width: min(60%, 900px);
+            width: min(60vw, 600px);
+            height: auto;
+            aspect-ratio: 1440 / 1080;  /* MacBookの一般的なスクリーンショットの比率 */
+            object-fit: cover;
+            margin: 2rem auto;
+            border-radius: 1rem;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+            transition: transform 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .qr-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+            text-align: center;
+            transition: transform 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-color);
+            width: auto;
+            max-width: 160px;
+        }
+
+        .qr-container:hover {
+            transform: scale(1.02);
+        }
+
+        .qr-container img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .qr-container p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.4;
+            margin-top: 0.5rem;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .feature-screenshot {
+                width: 70vw;
+                max-width: 70%;
+            }
+
+            .slide h1 {
+                font-size: 2.8rem;
+            }
+
+            .slide p {
+                font-size: 1.5rem;
+            }
+
+            .platform-info {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .info-tag {
+                padding: 0.6rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .feature-screenshot {
+                width: 85vw;
+                max-width: 85%;
+            }
+
+            .slide h1 {
+                font-size: 2.2rem;
+            }
+
+            .slide p {
+                font-size: 1.2rem;
+            }
+        }
+
+        .control-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+        }
+
+        .toggle-autoplay {
+            background: var(--premium-gradient);
+            border: none;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            padding: 0.8rem 1.5rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-autoplay:hover {
+            transform: translateY(-2px);
+        }
+
+        .toggle-autoplay i {
+            font-size: 1.2rem;
+        }
+
+        .slide-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .indicator.active {
+            background: var(--premium-gradient);
+            transform: scale(1.2);
+        }
+
+        .hero-content {
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: simpleSlideUp 0.5s ease forwards;
+        }
+
+        @keyframes simpleSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .platform-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .info-tag {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease;
+        }
+
+        .info-tag:hover {
+            transform: scale(1.05);
+        }
+
+        .info-tag i {
+            background: var(--premium-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.2rem;
+        }
+
+        .info-tag span {
+            color: var(--text-color);
+        }
+
+        .settings-panel {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 0.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #duration-select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1.5rem;
+            transition: background-color 0.2s ease;
+        }
+
+        #duration-select:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #duration-select option {
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <!-- スライド1: メイン紹介 -->
+        <div class="slide active">
+            <div class="sticky-notes-bg" id="heroNotes"></div>
+            <div class="hero-content">
+                <h1 class="logo">Kanbanize</h1>
+                <p>iOS・iPadOS・macOS標準のリマインダーと<br>自動同期するカンバン型タスク管理アプリ</p>
+                <div class="platform-info">
+                    <div class="info-tag">
+                        <i class="fab fa-apple"></i>
+                        <span>iOS 18+</span>
+                    </div>
+                    <div class="info-tag">
+                        <i class="fas fa-tablet-alt"></i>
+                        <span>iPadOS 18+</span>
+                    </div>
+                    <div class="info-tag">
+                        <i class="fas fa-laptop"></i>
+                        <span>macOS 15+</span>
+                    </div>
+                    <div class="info-tag">
+                        <i class="fas fa-language"></i>
+                        <span>日本語・English</span>
+                    </div>
+                </div>
+                <img src="images/screenshot.png" alt="アプリのスクリーンショット" class="feature-screenshot">
+            </div>
+        </div>
+
+        <!-- スライド2: 自動同期機能 -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1><i class="fas fa-sync-alt"></i> 自動同期機能</h1>
+                <p>標準リマインダーとシームレスに同期<br>EventKitを使用して常に最新の状態を維持</p>
+                <img src="images/sync.png" alt="同期機能のデモ" class="feature-screenshot">
+            </div>
+        </div>
+
+        <!-- スライド3: カンバンボード -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1><i class="fas fa-columns"></i> カンバン型レイアウト</h1>
+                <p>「TODO」「進行中」「完了」の3段階で管理<br>直感的な操作で効率的なタスク管理を実現</p>
+                <img src="images/kanban.png" alt="カンバンボードの画面" class="feature-screenshot">
+            </div>
+        </div>
+
+        <!-- スライド4: ドラッグ＆ドロップ -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1><i class="fas fa-arrows-alt"></i> ドラッグ＆ドロップ</h1>
+                <p>タスクの進行状況を直感的に管理<br>スムーズな操作性でストレスフリー</p>
+                <img src="images/drag.png" alt="ドラッグ＆ドロップのデモ" class="feature-screenshot">
+            </div>
+        </div>
+
+        <!-- スライド5: タイトル候補機能 -->
+        <div class="slide">
+            <div class="hero-content">
+                <h1><i class="fas fa-lightbulb"></i> タイトル候補機能</h1>
+                <p>過去のタスクから候補を表示<br>素早いタスク作成をサポート</p>
+                <img src="images/title.png" alt="タイトル候補機能のデモ" class="feature-screenshot">
+            </div>
+        </div>
+    </div>
+
+    <div class="qr-container">
+        <img src="images/qr.png" alt="App Store QRコード">
+        <p>App Storeで<br>ダウンロード</p>
+    </div>
+
+    <div class="settings-panel">
+        <button class="toggle-autoplay">
+            <i class="fas fa-pause"></i>
+            <span>自動再生を停止</span>
+        </button>
+        <select id="duration-select">
+            <option value="5000">5秒</option>
+            <option value="10000" selected>10秒</option>
+            <option value="15000">15秒</option>
+            <option value="20000">20秒</option>
+        </select>
+    </div>
+
+    <div class="slide-indicator">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        const toggleButton = document.querySelector('.toggle-autoplay');
+        const durationSelect = document.querySelector('#duration-select');
+        let isPlaying = true;
+        let slideInterval;
+        let currentDuration = parseInt(durationSelect.value);
+
+        function updateIndicators() {
+            const indicatorContainer = document.querySelector('.slide-indicator');
+            indicatorContainer.innerHTML = '';
+            
+            for (let i = 0; i < slides.length; i++) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator' + (i === currentSlide ? ' active' : '');
+                indicator.addEventListener('click', () => {
+                    currentSlide = i;
+                    updateSlide();
+                    if (isPlaying) {
+                        startAutoPlay();
+                    }
+                });
+                indicatorContainer.appendChild(indicator);
+            }
+        }
+
+        function startAutoPlay() {
+            stopAutoPlay();
+            slideInterval = setInterval(nextSlide, currentDuration);
+        }
+
+        function stopAutoPlay() {
+            clearInterval(slideInterval);
+        }
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        toggleButton.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            if (isPlaying) {
+                startAutoPlay();
+                toggleButton.innerHTML = '<i class="fas fa-pause"></i><span>自動再生を停止</span>';
+            } else {
+                stopAutoPlay();
+                toggleButton.innerHTML = '<i class="fas fa-play"></i><span>自動再生を開始</span>';
+            }
+        });
+
+        durationSelect.addEventListener('change', (e) => {
+            currentDuration = parseInt(e.target.value);
+            if (isPlaying) {
+                startAutoPlay();
+            }
+        });
+
+        // キーボードナビゲーション
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                updateSlide();
+                if (isPlaying) startAutoPlay();
+            } else if (e.key === 'ArrowRight') {
+                currentSlide = (currentSlide + 1) % slides.length;
+                updateSlide();
+                if (isPlaying) startAutoPlay();
+            }
+        });
+
+        // 初期化
+        updateIndicators();
+        startAutoPlay();
+    </script>
+</body>
+</html> 
